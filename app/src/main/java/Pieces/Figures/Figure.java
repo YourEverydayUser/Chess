@@ -34,4 +34,5 @@ public class Figure {
     public ArrayList<Field> getPossibleMoves() {
         return possibleMoves;
     }
+
 }

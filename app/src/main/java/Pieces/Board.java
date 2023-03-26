@@ -24,7 +24,7 @@ public class Board {
 
         for(int x = 0; x < xDimension; x++) {
             for(int y = 0; y < yDimension; y++) {
-                gameBoard[x][y] = new Field(x, y);
+                gameBoard[x][y] = new Field(x, y, null);
             }
         }
     }
