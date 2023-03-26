@@ -1,10 +1,12 @@
 package Pieces;
 
+
+import static Pieces.BoardDimension.XDIMENSION;
+import static Pieces.BoardDimension.YDIMENSION;
+
 public class Board {
 
     private Field[][] gameBoard;
-    private final static int YDIMENSION = 8;
-    private final static int XDIMENSION = 8;
 
     private enum state {
         FREE("o"),
@@ -16,10 +18,12 @@ public class Board {
     }
 
     public Board() {
-        gameBoard = new Field[XDIMENSION][YDIMENSION];
+        int xDimension = XDIMENSION.getValue();
+        int yDimension = YDIMENSION.getValue();
+        gameBoard = new Field[xDimension][yDimension];
 
-        for(int x = 0; x < XDIMENSION; x++) {
-            for(int y = 0; y < YDIMENSION; y++) {
+        for(int x = 0; x <= xDimension; x++) {
+            for(int y = 0; y <= yDimension; y++) {
                 gameBoard[x][y] = new Field(x, y);
             }
         }
@@ -29,11 +33,4 @@ public class Board {
         return gameBoard;
     }
 
-    public static int getXDIMENSION() {
-        return XDIMENSION;
-    }
-
-    public static int getYDIMENSION() {
-        return YDIMENSION;
-    }
 }

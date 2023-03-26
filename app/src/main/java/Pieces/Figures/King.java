@@ -11,11 +11,15 @@ public class King extends Figure {
     }
 
     private ArrayList<Field> calculatePossibleMoves(Field currentPosition) {
-        int currentX = currentPosition.getxCoordinate();
-        int currentY = currentPosition.getyCoordinate();
+        ArrayList<Field> possibleMoves = new ArrayList<>();
 
+        for(Field field : currentPosition.getNeighborFields()) {
+            if(field.getFigure() == null) {
+                possibleMoves.add(field);
+            }
+        }
 
-        return null;
+        return possibleMoves;
     }
 
 }
