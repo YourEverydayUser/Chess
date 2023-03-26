@@ -3,6 +3,7 @@
  */
 package Chess;
 
+import GameSession.GameStart;
 import Pieces.Board;
 
 public class App {
@@ -11,8 +12,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-        Board gameBoard = new Board();
+        GameStart gameSession = new GameStart();
 
-
+        gameSession.printGameBoard(gameSession.getGameBoard());
     }
 }

@@ -1,16 +1,19 @@
 package Pieces;
 
 import Pieces.Figures.Figure;
-import org.checkerframework.checker.units.qual.A;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Field {
 
     private final int xCoordinate;
     private final int yCoordinate;
-    private final ArrayList<Field> neighborFields;
+    private final ArrayList<Point> neighborFields;
+    private final String color;
+
     private Figure figure;
+
 
     public Field(int xCoordinate, int yCoordinate) {
         this.xCoordinate = xCoordinate;
@@ -18,11 +21,17 @@ public class Field {
         figure = null;
 
         neighborFields = new ArrayList<>();
-        for(Field field : getPossibleNeighborFields(xCoordinate, yCoordinate)) {
-            if((field.xCoordinate >= 0 && field.xCoordinate <= 7) &&
-                    field.yCoordinate >= 0 && field.yCoordinate <= 7) {
-                neighborFields.add(field);
+        for(Point point : getPossibleNeighborFields(xCoordinate, yCoordinate)) {
+            if((point.getX() >= 0 && point.getY() <= 7) &&
+                    point.getY() >= 0 && point.getY() <= 7) {
+                neighborFields.add(new Point(point.x, point.y));
             }
+        }
+
+        if((xCoordinate+yCoordinate) % 2 == 0) {
+            color = "black";
+        } else {
+            color = "white";
         }
     }
 
@@ -32,11 +41,17 @@ public class Field {
         this.figure = figure;
 
         neighborFields = new ArrayList<>();
-        for(Field field : getPossibleNeighborFields(xCoordinate, yCoordinate)) {
-            if((field.xCoordinate >= 0 && field.xCoordinate <= 7) &&
-                    field.yCoordinate >= 0 && field.yCoordinate <= 7) {
-                neighborFields.add(field);
+        for(Point point : getPossibleNeighborFields(xCoordinate, yCoordinate)) {
+            if((point.getX() >= 0 && point.getY() <= 7) &&
+                    point.getY() >= 0 && point.getY() <= 7) {
+                neighborFields.add(new Point(point.x, point.y));
             }
+        }
+
+        if((xCoordinate+yCoordinate) % 2 == 0) {
+            color = "black";
+        } else {
+            color = "white";
         }
     }
 
@@ -48,7 +63,7 @@ public class Field {
         return yCoordinate;
     }
 
-    public ArrayList<Field> getNeighborFields() {
+    public ArrayList<Point> getNeighborFields() {
         return neighborFields;
     }
 
@@ -60,16 +75,18 @@ public class Field {
         this.figure = figure;
     }
 
-    private ArrayList<Field> getPossibleNeighborFields(int xCoordinate, int yCoordinate) {
-        ArrayList<Field> possibleFields = new ArrayList<>();
-        possibleFields.add(new Field(xCoordinate + 1, yCoordinate));
-        possibleFields.add(new Field(xCoordinate + 1, yCoordinate + 1));
-        possibleFields.add(new Field(xCoordinate + 1, yCoordinate - 1));
-        possibleFields.add(new Field(xCoordinate - 1, yCoordinate));
-        possibleFields.add(new Field(xCoordinate - 1, yCoordinate + 1));
-        possibleFields.add(new Field(xCoordinate - 1, yCoordinate - 1));
-        possibleFields.add(new Field(xCoordinate, yCoordinate + 1));
-        possibleFields.add(new Field(xCoordinate, yCoordinate -1));
+    private ArrayList<Point> getPossibleNeighborFields(int xCoordinate, int yCoordinate) {
+            ArrayList<Point> possibleFields = new ArrayList<Point>();
+
+            possibleFields.add(new Point(xCoordinate + 1, yCoordinate));
+            possibleFields.add(new Point(xCoordinate + 1, yCoordinate + 1));
+            possibleFields.add(new Point(xCoordinate + 1, yCoordinate - 1));
+            possibleFields.add(new Point(xCoordinate - 1, yCoordinate));
+            possibleFields.add(new Point(xCoordinate - 1, yCoordinate + 1));
+            possibleFields.add(new Point(xCoordinate - 1, yCoordinate - 1));
+            possibleFields.add(new Point(xCoordinate, yCoordinate + 1));
+            possibleFields.add(new Point(xCoordinate, yCoordinate - 1));
+
 
         return possibleFields;
     }

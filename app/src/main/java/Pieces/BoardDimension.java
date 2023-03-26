@@ -5,11 +5,13 @@ public enum BoardDimension {
     XDIMENSION(7),
     YDIMENSION(7);
 
-    BoardDimension(int i) {
+    private int value;
 
+    BoardDimension(int i) {
+        value = i;
     }
 
     public int getValue(){
-        return XDIMENSION.getValue();
+        return value;
     }
 }

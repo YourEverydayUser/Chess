@@ -22,8 +22,8 @@ public class Board {
         int yDimension = YDIMENSION.getValue();
         gameBoard = new Field[xDimension][yDimension];
 
-        for(int x = 0; x <= xDimension; x++) {
-            for(int y = 0; y <= yDimension; y++) {
+        for(int x = 0; x < xDimension; x++) {
+            for(int y = 0; y < yDimension; y++) {
                 gameBoard[x][y] = new Field(x, y);
             }
         }

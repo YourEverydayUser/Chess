@@ -2,6 +2,7 @@ package Pieces.Figures;
 
 import Pieces.Field;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class King extends Figure {
@@ -13,10 +14,9 @@ public class King extends Figure {
     private ArrayList<Field> calculatePossibleMoves(Field currentPosition) {
         ArrayList<Field> possibleMoves = new ArrayList<>();
 
-        for(Field field : currentPosition.getNeighborFields()) {
-            if(field.getFigure() == null) {
-                possibleMoves.add(field);
-            }
+        for(Point point : currentPosition.getNeighborFields()) {
+            possibleMoves.add(new Field(point.x, point.y));
+
         }
 
         return possibleMoves;
