@@ -13,15 +13,6 @@ public class Board {
     private HashMap<Field, Figure> gameBoard;
     private Field[][] keys = new Field[XDIMENSION.getValue()][YDIMENSION.getValue()];
 
-    private enum state {
-        FREE("o"),
-        OCCUPIED("x");
-
-        state(String s) {
-
-        }
-    }
-
     public Board() {
         gameBoard = new HashMap<>();
 
@@ -42,6 +33,9 @@ public class Board {
         return keys;
     }
 
+    /**
+     * Adds the white players figures to the hashmap
+     */
     public void initializeWhitePlayer() {
 
         gameBoard.put(keys[3][0], new King(keys[3][0], true, Color.WHITE));
@@ -58,6 +52,9 @@ public class Board {
         }
     }
 
+    /**
+     * Adds the black players figures to the hashmap
+     */
     public void initializeBlackPlayer() {
         gameBoard.put(keys[3][7], new King(keys[3][7], true, Color.BLACK));
         gameBoard.put(keys[4][7], new Queen(keys[4][7], true, Color.BLACK));

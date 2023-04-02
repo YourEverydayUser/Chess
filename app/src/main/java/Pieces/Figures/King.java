@@ -39,5 +39,4 @@ public class King extends Figure {
             System.out.println(point);
         }
     }
-
 }

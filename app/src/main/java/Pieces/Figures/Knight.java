@@ -9,6 +9,11 @@ public class Knight extends Figure {
         super(currentPosition, onGameBoard, color);
     }
 
+    /**
+     * Returns the theoretically possible moves for the knight
+     * @param currentPosition the current position of the knight
+     * @return ArrayList<Point> all possible moves
+     */
     public ArrayList<Point> calculatePossibleMoves(Field currentPosition) {
         ArrayList<Point> possibleMoves = new ArrayList<>();
         int currentX = currentPosition.getxCoordinate();
