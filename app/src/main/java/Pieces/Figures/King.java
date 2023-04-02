@@ -12,12 +12,34 @@ public class King extends Figure {
     }
 
     /**
-     * Returns the theoreticly possible moves, which would be all adjacent fields for the kind
+     * Returns the theoretically possible moves, which would be all adjacent fields for the king
      * @param currentPosition the current position of the king
-     * @return ArrayList<Point> all neighboring Fields
+     * @return ArrayList<Point> all possible moves
      */
     private ArrayList<Point> calculatePossibleMoves(Field currentPosition) {
-        return new ArrayList<>(currentPosition.getNeighborFields());
+        ArrayList<Point> possibleMoves = new ArrayList<>();
+        int currentX = currentPosition.getxCoordinate();
+        int currentY = currentPosition.getyCoordinate();
+
+        for(int x = 0; x <= 7; x++) {
+            int absoluteXDistance = Math.abs(currentX - x);
+            for(int y = 0; y <= 7; y++) {
+                int absoluteYDistance = Math.abs(currentY - y);
+                if(((absoluteYDistance + absoluteXDistance) <= 2) && (y != currentY || x != currentX)
+                        && absoluteYDistance <= 1 && absoluteXDistance <= 1) {
+                    possibleMoves.add(new Point(x, y));
+                }
+            }
+        }
+        return possibleMoves;
+    }
+
+    public static void main(String[] args) {
+        King king = new King(new Field(4, 4, null), true);
+
+        for(Point point : king.calculatePossibleMoves(king.getCurrentPosition())) {
+            System.out.println(point);
+        }
     }
 
 }

@@ -11,15 +11,20 @@ public class Tower extends Figure {
         super(currentPosition, onGameBoard);
     }
 
+    /**
+     * Returns the theoretically possible moves, which would be all the fields where x xor y varies.
+     * @param currentPosition the current position of the tower
+     * @return ArrayList<Point> all possible moves
+     */
     public ArrayList<Point> calculatePossibleMoves(Field currentPosition) {
         ArrayList<Point> possibleMoves = new ArrayList<>();
-        int x = currentPosition.getxCoordinate();
-        int y = currentPosition.getyCoordinate();
+        int currentX = currentPosition.getxCoordinate();
+        int currentY = currentPosition.getyCoordinate();
 
-        for(int i = 0; i <= 7; i++) {
-            for(int j = 0; j <= 7; j++) {
-                if(((x == i) && (y != j)) || ((x != i) && (y == j))) {
-                    possibleMoves.add(new Point(i, j));
+        for(int x = 0; x <= 7; x++) {
+            for(int y = 0; y <= 7; y++) {
+                if(((currentX == x) && (currentY != y)) || ((currentX != x) && (currentY == y))) {
+                    possibleMoves.add(new Point(x, y));
                 }
             }
         }

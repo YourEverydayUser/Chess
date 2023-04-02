@@ -11,18 +11,23 @@ public class Queen extends Figure {
         super(currentPosition, onGameBoard);
     }
 
+    /**
+     * Returns the theoretically possible moves for the queen figure. Combined Movement rules of bishop and tower.
+     * @param currentPosition the current position of the queen
+     * @return ArrayList<Point> all possible moves
+     */
     public ArrayList<Point> calculatePossibleMoves(Field currentPosition) {
         ArrayList<Point> possibleMoves = new ArrayList<>();
-        int x = currentPosition.getxCoordinate();
-        int y = currentPosition.getyCoordinate();
+        int currentX = currentPosition.getxCoordinate();
+        int currentY = currentPosition.getyCoordinate();
 
-        int sum = x + y;
+        int sum = currentX + currentY;
 
-        for(int i = 0; i <= 7; i++) {
-            for(int j = 0; j <= 7; j++) {
-                if((((x == i) && (y != j)) || ((x != i) && (y == j))) || //tower rules
-                   (i+j==sum) || ((((i-x) + (j - y)) % 2 == 0) && ((i-x) == (j - y)))) {//bishop rules
-                    possibleMoves.add(new Point(i, j));
+        for(int x = 0; x <= 7; x++) {
+            for(int y = 0; y <= 7; y++) {
+                if((((currentX == x) && (currentY != y)) || ((currentX != x) && (currentY == y))) || //tower rules
+                   (x+y==sum) || ((((x-currentX) + (y - currentY)) % 2 == 0) && ((x-currentX) == (y - currentY)))) {//bishop rules
+                    possibleMoves.add(new Point(x, y));
                 }
             }
         }
