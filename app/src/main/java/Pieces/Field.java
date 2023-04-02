@@ -9,19 +9,16 @@ public class Field {
 
     private final int xCoordinate;
     private final int yCoordinate;
-    private final String color;
+    private final Color color;
 
-    private Figure figure;
-
-    public Field(int xCoordinate, int yCoordinate, Figure figure) {
+    public Field(int xCoordinate, int yCoordinate) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this.figure = figure;
 
         if((xCoordinate+yCoordinate) % 2 == 0) {
-            color = "black";
+            color = Color.BLACK;
         } else {
-            color = "white";
+            color = Color.WHITE;
         }
     }
 
@@ -31,15 +28,6 @@ public class Field {
 
     public int getyCoordinate() {
         return yCoordinate;
-    }
-
-
-    public Figure getFigure() {
-        return figure;
-    }
-
-    public void setFigure(Figure figure) {
-        this.figure = figure;
     }
 
 }

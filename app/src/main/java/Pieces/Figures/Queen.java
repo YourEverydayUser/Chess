@@ -1,14 +1,12 @@
 package Pieces.Figures;
-
 import Pieces.Field;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Queen extends Figure {
 
-    public Queen(Field currentPosition, boolean onGameBoard) {
-        super(currentPosition, onGameBoard);
+    public Queen(Field currentPosition, boolean onGameBoard, Color color) {
+        super(currentPosition, onGameBoard, color);
     }
 
     /**
@@ -35,7 +33,7 @@ public class Queen extends Figure {
     }
 
     public static void main(String[] args) {
-        Queen quuen = new Queen(new Field(0, 0, null), true);
+        Queen quuen = new Queen(new Field(0, 0), true, Color.BLACK);
 
         for(Point point : quuen.calculatePossibleMoves(quuen.getCurrentPosition())) {
             System.out.println(point);

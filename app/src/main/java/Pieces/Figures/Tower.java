@@ -1,14 +1,12 @@
 package Pieces.Figures;
-
 import Pieces.Field;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Tower extends Figure {
 
-    public Tower(Field currentPosition, boolean onGameBoard) {
-        super(currentPosition, onGameBoard);
+    public Tower(Field currentPosition, boolean onGameBoard, Color color) {
+        super(currentPosition, onGameBoard, color);
     }
 
     /**
@@ -32,7 +30,7 @@ public class Tower extends Figure {
     }
 
     public static void main(String[] args) {
-        Tower tower = new Tower(new Field(0, 0, null), true);
+        Tower tower = new Tower(new Field(0, 0), true, Color.BLACK);
 
         for(Point point : tower.calculatePossibleMoves(tower.getCurrentPosition())) {
             System.out.println(point);

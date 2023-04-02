@@ -1,8 +1,12 @@
 package GameSession;
 
 import Pieces.Board;
+import Pieces.BoardDimension;
 import Pieces.Field;
+import Pieces.Figures.Figure;
 import Pieces.Figures.King;
+
+import java.util.HashMap;
 
 public class GameStart {
 
@@ -10,14 +14,8 @@ public class GameStart {
 
     public GameStart() {
         gameBoard = new Board();
-        int counter = 0;
-        for(Field[] row : gameBoard.getGameBoard()) {
-            for(Field field : row) {
-                if(counter % 32==3)
-                    field.setFigure(new King(field, true));
-                counter++;
-            }
-        }
+        gameBoard.initializeBlackPlayer();
+        gameBoard.initializeWhitePlayer();
     }
 
     public Board getGameBoard() {
@@ -25,15 +23,24 @@ public class GameStart {
     }
 
     public void printGameBoard(Board board) {
-        for(Field[] row : board.getGameBoard()) {
-            for(Field field : row) {
-                if(field.getFigure() != null) {
+        HashMap<Field, Figure> gameBoard = board.getGameBoard();
+        Field[][] keys = board.getKeys();
+        int counter = 0;
+
+        for(int x = 0; x < BoardDimension.XDIMENSION.getValue(); x++) {
+            for(int y = 0; y < BoardDimension.YDIMENSION.getValue(); y++) {
+                if(gameBoard.get(keys[x][y]) != null) {
                     System.out.print("   K   ");
-                } else {
+                }
+                else {
                     System.out.print("   .   ");
                 }
+                counter++;
+                if(counter==8) {
+                    System.out.println("\n");
+                    counter=0;
+                }
             }
-            System.out.println("\n");
         }
     }
 }

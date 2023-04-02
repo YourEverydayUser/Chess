@@ -2,8 +2,8 @@ package Pieces;
 
 public enum BoardDimension {
 
-    XDIMENSION(7),
-    YDIMENSION(7);
+    XDIMENSION(8),
+    YDIMENSION(8);
 
     private int value;
 

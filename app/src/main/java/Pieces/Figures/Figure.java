@@ -1,18 +1,18 @@
 package Pieces.Figures;
-
 import Pieces.Field;
-
 import java.util.ArrayList;
 
-public class Figure {
+public abstract class Figure {
 
     private Field currentPosition;
     private boolean onGameBoard;
     private ArrayList<Field> possibleMoves;
+    private final Color color;
 
-    public Figure(Field currentPosition, boolean onGameBoard) {
+    public Figure(Field currentPosition, boolean onGameBoard, Color color) {
         this.currentPosition = currentPosition;
         onGameBoard = true;
+        this.color = color;
     }
 
     public Field getCurrentPosition() {
@@ -35,4 +35,7 @@ public class Figure {
         return possibleMoves;
     }
 
+    public Color getColor() {
+        return color;
+    }
 }

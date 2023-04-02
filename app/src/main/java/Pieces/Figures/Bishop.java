@@ -1,14 +1,12 @@
 package Pieces.Figures;
-
 import Pieces.Field;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Bishop extends Figure {
 
-    public Bishop(Field currentPosition, boolean onGameBoard) {
-        super(currentPosition, onGameBoard);
+    public Bishop(Field currentPosition, boolean onGameBoard, Color color) {
+        super(currentPosition, onGameBoard, color);
     }
 
     /**
@@ -34,7 +32,7 @@ public class Bishop extends Figure {
     }
 
     public static void main(String[] args) {
-        Bishop bishop = new Bishop(new Field(4, 5, null), true);
+        Bishop bishop = new Bishop(new Field(4, 5), true, Color.BLACK);
 
         for(Point point : bishop.calculatePossibleMoves(bishop.getCurrentPosition())) {
             System.out.println(point);

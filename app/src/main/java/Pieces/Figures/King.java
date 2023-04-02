@@ -1,14 +1,12 @@
 package Pieces.Figures;
-
 import Pieces.Field;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class King extends Figure {
 
-    public King(Field currentPosition, boolean onGameBoard) {
-        super(currentPosition, onGameBoard);
+    public King(Field currentPosition, boolean onGameBoard, Color color) {
+        super(currentPosition, onGameBoard, color);
     }
 
     /**
@@ -16,7 +14,7 @@ public class King extends Figure {
      * @param currentPosition the current position of the king
      * @return ArrayList<Point> all possible moves
      */
-    private ArrayList<Point> calculatePossibleMoves(Field currentPosition) {
+    public ArrayList<Point> calculatePossibleMoves(Field currentPosition) {
         ArrayList<Point> possibleMoves = new ArrayList<>();
         int currentX = currentPosition.getxCoordinate();
         int currentY = currentPosition.getyCoordinate();
@@ -35,7 +33,7 @@ public class King extends Figure {
     }
 
     public static void main(String[] args) {
-        King king = new King(new Field(4, 4, null), true);
+        King king = new King(new Field(4, 4), true, Color.BLACK);
 
         for(Point point : king.calculatePossibleMoves(king.getCurrentPosition())) {
             System.out.println(point);
