@@ -11,6 +11,12 @@ public class Field {
     private final int yCoordinate;
     private final Color color;
 
+    //are needed for the GUI to define when a field is selected
+    private int lowerYBorder;
+    private int lowerXBorder;
+    private int upperYBorder;
+    private int upperXBorder;
+
     public Field(int xCoordinate, int yCoordinate) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
@@ -30,4 +36,35 @@ public class Field {
         return yCoordinate;
     }
 
+    public int getLowerXBorder() {
+        return lowerXBorder;
+    }
+
+    public int getLowerYBorder() {
+        return lowerYBorder;
+    }
+
+    public int getUpperXBorder() {
+        return upperXBorder;
+    }
+
+    public int getUpperYBorder() {
+        return upperYBorder;
+    }
+
+    public void setUpperXBorder(int upperXBorder) {
+        this.upperXBorder = upperXBorder;
+    }
+
+    public void setUpperYBorder(int upperYBorder) {
+        this.upperYBorder = upperYBorder;
+    }
+
+    public void setLowerXBorder(int lowerXBorder) {
+        this.lowerXBorder = lowerXBorder;
+    }
+
+    public void setLowerYBorder(int lowerYBorder) {
+        this.lowerYBorder = lowerYBorder;
+    }
 }

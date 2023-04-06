@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Bishop extends Figure {
 
     public Bishop(Field currentPosition, boolean onGameBoard, Color color) {
-        super(currentPosition, onGameBoard, color);
+        super(currentPosition, onGameBoard, color, "Bishop");
     }
 
     /**

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Tower extends Figure {
 
     public Tower(Field currentPosition, boolean onGameBoard, Color color) {
-        super(currentPosition, onGameBoard, color);
+        super(currentPosition, onGameBoard, color, "Tower");
     }
 
     /**

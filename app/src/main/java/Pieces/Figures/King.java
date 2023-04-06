@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class King extends Figure {
 
     public King(Field currentPosition, boolean onGameBoard, Color color) {
-        super(currentPosition, onGameBoard, color);
+        super(currentPosition, onGameBoard, color, "King");
     }
 
     /**
