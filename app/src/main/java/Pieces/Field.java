@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class Field {
 
-    private final int xCoordinate;
-    private final int yCoordinate;
-    private final Color color;
+    private final int XCOORDINATE;
+    private final int YCOORDINATE;
+    private final Color COLOR;
 
     //are needed for the GUI to define when a field is selected
     private int lowerYBorder;
@@ -15,22 +15,22 @@ public class Field {
     private int upperXBorder;
 
     public Field(int xCoordinate, int yCoordinate) {
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+        this.XCOORDINATE = xCoordinate;
+        this.YCOORDINATE = yCoordinate;
 
         if((xCoordinate+yCoordinate) % 2 == 0) {
-            color = Color.BLACK;
+            COLOR = Color.BLACK;
         } else {
-            color = Color.WHITE;
+            COLOR = Color.WHITE;
         }
     }
 
     public int getxCoordinate() {
-        return xCoordinate;
+        return XCOORDINATE;
     }
 
     public int getyCoordinate() {
-        return yCoordinate;
+        return YCOORDINATE;
     }
 
     public int getLowerXBorder() {

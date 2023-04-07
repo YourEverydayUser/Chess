@@ -1,4 +1,4 @@
 package GameSession;
 
-public class Turn {
+public class Move {
 }

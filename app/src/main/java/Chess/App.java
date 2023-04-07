@@ -20,7 +20,7 @@ public class App {
     public static void main(String[] args) throws IOException {
         GameSession gameSession = GameSession.getInstance();
         JFrame frame = new JFrame();
-        HashMap<Field, Figure> board = gameSession.getGameBoard().getGameBoard();
+        HashMap<Field, Figure> board = gameSession.accessBoard().getGameBoard();
         Set<Field> fields = board.keySet();
         Iterator<Field> fieldsIterator = fields.iterator();
 

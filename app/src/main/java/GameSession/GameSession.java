@@ -1,25 +1,35 @@
 package GameSession;
 
 import Pieces.Board;
-import Pieces.BoardDimension;
 import Pieces.Field;
 import Pieces.Figures.Figure;
+import java.util.ArrayList;
 
-import java.util.HashMap;
 
 public class GameSession {
 
     private Board gameBoard;
     private int turnCount;
+    private ArrayList<Player> players;
 
     private GameSession() {
         gameBoard = new Board();
-        gameBoard.initializeBlackPlayer();
-        gameBoard.initializeWhitePlayer();
         turnCount = 0;
+        players = new ArrayList<>();
+        players.add(Player.initializeBlackPlayer());
+        players.add(Player.initializeWhitePlayer());
+
+        //adds the players figures to the gameBoard
+        for(Player players : players) {
+            for(Figure figure : players.getFigures()) {
+                Field currentField = figure.getCurrentPosition();
+                Field[][] keys = gameBoard.getKeys();
+                gameBoard.getGameBoard().put(keys[currentField.getxCoordinate()][currentField.getyCoordinate()], figure);
+            }
+        }
     }
 
-    public Board getGameBoard() {
+    public Board accessBoard() {
         return gameBoard;
     }
 
@@ -27,25 +37,4 @@ public class GameSession {
         return new GameSession();
     }
 
-    public void printGameBoard(Board board) {
-        HashMap<Field, Figure> gameBoard = board.getGameBoard();
-        Field[][] keys = board.getKeys();
-        int counter = 0;
-
-        for(int x = 0; x < BoardDimension.XDIMENSION.getValue(); x++) {
-            for(int y = 0; y < BoardDimension.YDIMENSION.getValue(); y++) {
-                if(gameBoard.get(keys[x][y]) != null) {
-                    System.out.print("   K   ");
-                }
-                else {
-                    System.out.print("   .   ");
-                }
-                counter++;
-                if(counter==8) {
-                    System.out.println("\n");
-                    counter=0;
-                }
-            }
-        }
-    }
 }

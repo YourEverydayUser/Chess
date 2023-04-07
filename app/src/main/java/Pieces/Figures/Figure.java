@@ -7,14 +7,14 @@ public abstract class Figure {
     private Field currentPosition;
     private boolean onGameBoard;
     private ArrayList<Field> possibleMoves;
-    private final Color color;
-    private String name;
+    private final Color COLOR;
+    private final String NAME;
 
     public Figure(Field currentPosition, boolean onGameBoard, Color color, String name) {
         this.currentPosition = currentPosition;
         onGameBoard = true;
-        this.color = color;
-        this.name = name;
+        this.COLOR = color;
+        this.NAME = name;
     }
 
     public Field getCurrentPosition() {
@@ -38,10 +38,10 @@ public abstract class Figure {
     }
 
     public Color getColor() {
-        return color;
+        return COLOR;
     }
 
     public String getName() {
-        return name;
+        return NAME;
     }
 }
