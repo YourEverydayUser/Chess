@@ -1,9 +1,6 @@
 package Pieces;
 
-import Pieces.Figures.Figure;
-
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Field {
 

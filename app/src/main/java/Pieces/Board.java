@@ -37,7 +37,6 @@ public class Board {
      * Adds the white players figures to the hashmap
      */
     public void initializeWhitePlayer() {
-
         gameBoard.put(keys[3][0], new King(keys[3][0], true, Color.WHITE));
         gameBoard.put(keys[4][0], new Queen(keys[4][0], true, Color.WHITE));
         gameBoard.put(keys[5][0], new Bishop(keys[5][0], true, Color.WHITE));

@@ -4,22 +4,27 @@ import Pieces.Board;
 import Pieces.BoardDimension;
 import Pieces.Field;
 import Pieces.Figures.Figure;
-import Pieces.Figures.King;
 
 import java.util.HashMap;
 
-public class GameStart {
+public class GameSession {
 
     private Board gameBoard;
+    private int turnCount;
 
-    public GameStart() {
+    private GameSession() {
         gameBoard = new Board();
         gameBoard.initializeBlackPlayer();
         gameBoard.initializeWhitePlayer();
+        turnCount = 0;
     }
 
     public Board getGameBoard() {
         return gameBoard;
+    }
+
+    public static GameSession getInstance() {
+        return new GameSession();
     }
 
     public void printGameBoard(Board board) {
