@@ -3,10 +3,10 @@ import Pieces.Field;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Peasent extends Figure {
+public class Pawn extends Figure {
 
-    public Peasent(Field currentPosition, boolean onGameBoard, Color color) {
-        super(currentPosition, onGameBoard, color, "Peasent");
+    public Pawn(Field currentPosition, boolean onGameBoard, Color color) {
+        super(currentPosition, onGameBoard, color, "Pawn");
     }
 
     public ArrayList<Point> calculatePossibleMoves(Field currentPosition) {

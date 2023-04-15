@@ -31,7 +31,7 @@ public class Player {
         whitePlayer.figures.add(new Tower(new Field(0, 0), true, Color.WHITE));
 
         for(int i = 0; i <= 7; i++) {
-            whitePlayer.figures.add(new Peasent(new Field(i, 1), true, Color.WHITE));
+            whitePlayer.figures.add(new Pawn(new Field(i, 1), true, Color.WHITE));
         }
 
         return whitePlayer;
@@ -49,7 +49,7 @@ public class Player {
         blackPlayer.figures.add(new Tower(new Field(0, 7), true, Color.BLACK));
 
         for(int i = 0; i <= 7; i++) {
-            blackPlayer.figures.add(new Peasent(new Field(i, 6), true, Color.BLACK));
+            blackPlayer.figures.add(new Pawn(new Field(i, 6), true, Color.BLACK));
         }
 
         return blackPlayer;

@@ -7,13 +7,13 @@ import org.junit.Test;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class PeasentTest {
+public class PawnTest {
 
     @Test
-    public void testCalculatePossibleMovesWhite() {
+    public void testCalculatePossibleMovesWhitePawn() {
 
         //Setup
-        Peasent pawn = new Peasent(new Field(1, 1), true, Color.WHITE);
+        Pawn pawn = new Pawn(new Field(1, 1), true, Color.WHITE);
         ArrayList<Point> correctMoves = new ArrayList<>();
         correctMoves.add(new Point(1, 2));
         correctMoves.add(new Point(1, 3));
@@ -31,7 +31,7 @@ public class PeasentTest {
     public void testCalculatePossibleMovesBlackPawn() {
 
         //Setup
-        Peasent pawn = new Peasent(new Field(3, 4), true, Color.BLACK);
+        Pawn pawn = new Pawn(new Field(3, 4), true, Color.BLACK);
         ArrayList<Point> correctMoves = new ArrayList<>();
         correctMoves.add(new Point(3, 3));
 

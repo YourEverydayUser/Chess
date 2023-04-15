@@ -24,17 +24,6 @@ public class App {
         JFrame frame = new JFrame();
         HashMap<Field, Figure> board = gameSession.accessBoard().getGameBoard();
         Set<Field> fields = board.keySet();
-        Iterator<Field> fieldsIterator = fields.iterator();
-
-        while(fieldsIterator.hasNext()) {
-            Field currentField = fieldsIterator.next();
-            int x = currentField.getxCoordinate();
-            int y = currentField.getyCoordinate();
-            currentField.setUpperXBorder(64 + x*64);
-            currentField.setLowerXBorder(x*64);
-            currentField.setUpperYBorder(64 + 64*y);
-            currentField.setLowerYBorder(y*64);
-        }
 
         BufferedImage all= ImageIO.read(new File("C:\\Users\\Fabian\\Desktop\\Chess\\app\\src\\main\\resources\\chess.png"));
         Image[] imgs =new Image[12];
