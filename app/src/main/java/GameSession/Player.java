@@ -7,20 +7,18 @@ import java.util.List;
 
 public class Player {
 
-    private String color;
+    private Color color;
     private List<Figure> figures;
     private List<Figure> deadPool;
-    private boolean activePlayer;
 
-    private Player(String color, Boolean activePlayer) {
+    private Player(Color color, Boolean activePlayer) {
         figures = new ArrayList<>();
         deadPool = new ArrayList<>();
         this.color = color;
-        this.activePlayer = activePlayer;
     }
 
     public static Player initializeWhitePlayer() {
-        Player whitePlayer = new Player("white", true);
+        Player whitePlayer = new Player(Color.WHITE, true);
         whitePlayer.figures.add(new King(new Field(4, 0), true, Color.WHITE));
         whitePlayer.figures.add(new Queen(new Field(3, 0), true, Color.WHITE));
         whitePlayer.figures.add(new Bishop(new Field(5, 0), true, Color.WHITE));
@@ -38,7 +36,7 @@ public class Player {
     }
 
     public static Player initializeBlackPlayer() {
-        Player blackPlayer = new Player("black", false);
+        Player blackPlayer = new Player(Color.BLACK, false);
         blackPlayer.figures.add(new King(new Field(4, 7), true, Color.BLACK));
         blackPlayer.figures.add(new Queen(new Field(3, 7), true, Color.BLACK));
         blackPlayer.figures.add(new Bishop(new Field(5, 7), true, Color.BLACK));
@@ -59,7 +57,11 @@ public class Player {
         return figures;
     }
 
-    public boolean isActivePlayer() {
-        return activePlayer;
+    public List<Figure> getDeadPool() {
+        return deadPool;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

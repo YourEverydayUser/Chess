@@ -3,6 +3,9 @@
  */
 package Chess;
 import GameSession.GameSession;
+
+import Observer.BoardObserver;
+import Pieces.Board;
 import Pieces.Field;
 import Pieces.Figures.Figure;
 import javax.imageio.ImageIO;
@@ -14,23 +17,21 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
-public class App {
+public class App implements BoardObserver {
 
     public static void main(String[] args) throws IOException {
         GameSession gameSession = GameSession.getInstance();
         JFrame frame = new JFrame();
         HashMap<Field, Figure> board = gameSession.accessBoard().getGameBoard();
-        Set<Field> fields = board.keySet();
+
 
         BufferedImage all= ImageIO.read(new File("C:\\Users\\Fabian\\Desktop\\Chess\\app\\src\\main\\resources\\chess.png"));
-        Image[] imgs =new Image[12];
+        Image[] images =new Image[12];
         int ind=0;
         for(int y=0;y<400;y+=200){
             for(int x=0;x<1200;x+=200){
-                imgs[ind]=all.getSubimage(x, y, 200, 200).getScaledInstance(64, 64, BufferedImage.SCALE_SMOOTH);
+                images[ind]=all.getSubimage(x, y, 200, 200).getScaledInstance(64, 64, BufferedImage.SCALE_SMOOTH);
                 ind++;
             }
         }
@@ -63,9 +64,9 @@ public class App {
                             case ("Bishop") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 2 : 8;
                             case ("Knight") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 3 : 9;
                             case ("Tower") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 4 : 10;
-                            case ("Peasent") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 5 : 11;
+                            case ("Pawn") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 5 : 11;
                         }
-                        g.drawImage(imgs[ind], field.getxCoordinate() * 64, field.getyCoordinate() * 64, this);
+                        g.drawImage(images[ind], field.getxCoordinate() * 64, field.getyCoordinate() * 64, this);
                     }
                 }
             }
@@ -80,7 +81,13 @@ public class App {
                 int x = e.getX() / 64;
                 int y = Math.abs(e.getY() - (8 * 64))/ 64;
                 System.out.println("Clicked on field: (" + x + ", " + y + ")");
+
             }
         });
+    }
+
+    @Override
+    public void update(Board board) {
+
     }
 }

@@ -1,13 +1,15 @@
 package Observer;
 
+import Pieces.Board;
+
 /**
  * Implementation of the observer interface
  */
-public interface Observer {
+public interface BoardObserver {
 
     /**
      * Updates the board-state when a move is made
      */
-    void updateMessage(String message);
+    void update(Board board);
 
 }
