@@ -5,6 +5,7 @@ package Chess;
 
 import GameSession.GameSession;
 import Pieces.Field;
+import Pieces.Figures.Color;
 import Pieces.Figures.Figure;
 
 import javax.swing.*;
@@ -32,7 +33,7 @@ public class App {
             @Override
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / 64;
-                int y = e.getY() / 64;
+                int y = Math.abs(e.getY() - (8 * 64)) / 64;
 
                 if (firstX == -1 && firstY == -1) {
                     firstX = x;

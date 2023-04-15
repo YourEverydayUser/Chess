@@ -23,7 +23,7 @@ public class Pawn extends Figure {
         }
 
         // Two steps forward (only on the initial position)
-        if (row == (getColor() == Color.WHITE ? 1 : 6)) {
+        if (col == (getColor() == Color.WHITE ? 1 : 6)) {
             Field twoStepsForward = new Field(row, col + 2 * forwardDirection);
             possibleMoves.add(new Point(twoStepsForward.getxCoordinate(), twoStepsForward.getyCoordinate()));
         }
