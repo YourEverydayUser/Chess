@@ -27,7 +27,7 @@ public class Field {
         return YCOORDINATE;
     }
 
-    public Point transformFieldToPoint(Field field) {
+    public static Point transformFieldToPoint(Field field) {
         return new Point(field.getxCoordinate(), field.getyCoordinate());
     }
 

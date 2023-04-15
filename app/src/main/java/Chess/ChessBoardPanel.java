@@ -20,7 +20,10 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
     public ChessBoardPanel(HashMap<Field, Figure> board) throws IOException {
         this.board = board;
 
-        BufferedImage all = ImageIO.read(new File("C:\\Users\\Fabian\\Desktop\\Chess\\app\\src\\main\\resources\\chess.png"));
+        //Desktop
+        //BufferedImage all = ImageIO.read(new File("C:\\Users\\Fabian\\Desktop\\Chess\\app\\src\\main\\resources\\chess.png"));
+        //Laptop
+        BufferedImage all = ImageIO.read(new File("C:\\Users\\fkust\\IdeaProjects\\Chess\\app\\src\\main\\resources\\chess.png"));
         int ind=0;
         for(int y=0;y<400;y+=200){
             for(int x=0;x<1200;x+=200){
@@ -34,7 +37,7 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
     public void paint(Graphics g) {
         super.paint(g);
 
-        for(int x = 0; x < 8; x++) {
+        for(int x = 7; x >= 0; x--) {
             for(int y = 0; y < 8; y++) {
                 if((x+y) % 2 == 0) {
                     g.setColor(Color.WHITE);

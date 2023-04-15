@@ -195,28 +195,28 @@ public class Board {
         // Check if the occupied field is on the same row or column as the figure
         if (figureX == occupiedX) {
             // Remove all fields on the same row as the occupied field
-            for (int y = 0; y < 8; y++) {
+            for (int y = occupiedY; y < 8; y++) {
                 if (y != occupiedY) {
-                    blockedFields.add(new Point(occupiedX, y));
+                    blockedFields.add(Field.transformFieldToPoint(keys[occupiedX][y]));
                 }
             }
         } else if (figureY == occupiedY) {
             // Remove all fields on the same column as the occupied field
-            for (int x = 0; x < 8; x++) {
+            for (int x = occupiedX; x < 8; x++) {
                 if (x != occupiedX) {
-                    blockedFields.add(new Point(x, occupiedY));
+                    blockedFields.add(Field.transformFieldToPoint(keys[x][occupiedY]));
                 }
             }
         }
 
-        blockedFields.add(new Point(occupiedField.getxCoordinate(), occupiedField.getyCoordinate()));
+        blockedFields.add(Field.transformFieldToPoint(keys[occupiedX][occupiedY]));
 
         return blockedFields;
     }
 
     private boolean isPathBlocked(Field from, Field to) {
-        int deltaX = Integer.compare(to.getxCoordinate(), from.getyCoordinate());
-        int deltaY = Integer.compare(to.getxCoordinate(), from.getyCoordinate());
+        int deltaX = Integer.compare(to.getxCoordinate(), from.getxCoordinate());
+        int deltaY = Integer.compare(to.getyCoordinate(), from.getyCoordinate());
 
         int x = from.getxCoordinate() + deltaX;
         int y = from.getyCoordinate() + deltaY;
