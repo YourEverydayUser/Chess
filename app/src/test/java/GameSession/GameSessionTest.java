@@ -35,7 +35,7 @@ public class GameSessionTest {
         Assert.assertEquals("Tower", pieceName.apply(keys[7][0]));
         Assert.assertEquals(Color.WHITE, pieceColor.apply(keys[7][0]));
         for (int col = 0; col < 8; col++) {
-            Assert.assertEquals("Peasent", pieceName.apply(keys[col][1]));
+            Assert.assertEquals("Pawn", pieceName.apply(keys[col][1]));
             Assert.assertEquals(Color.WHITE, pieceColor.apply(keys[col][1]));
         }
 
@@ -57,7 +57,7 @@ public class GameSessionTest {
         Assert.assertEquals("Tower", pieceName.apply(keys[7][7]));
         Assert.assertEquals(Color.BLACK, pieceColor.apply(keys[7][7]));
         for (int col = 0; col < 8; col++) {
-            Assert.assertEquals("Peasent", pieceName.apply(keys[col][6]));
+            Assert.assertEquals("Pawn", pieceName.apply(keys[col][6]));
             Assert.assertEquals(Color.BLACK, pieceColor.apply(keys[col][6]));
         }
     }

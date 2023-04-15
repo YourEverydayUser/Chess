@@ -69,6 +69,7 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
     public void update(Board board) {
             this.board.clear();
             this.board.putAll(board.getGameBoard());
+            repaint();
     }
 
 }

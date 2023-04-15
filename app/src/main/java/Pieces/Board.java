@@ -121,24 +121,30 @@ public class Board {
             }
         }
         ArrayList<Field> diag = new ArrayList<>();
-        if (figure.getColor() == Color.WHITE) {
-            diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() - 1][figure.getCurrentPosition().getyCoordinate() + 1]);
-            diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() + 1][figure.getCurrentPosition().getyCoordinate() + 1]);
-            for (Field field : diag) {
-                if (gameBoard.get(field) != null) {
-                    validMoves.add(field);
+        try {
+            if (figure.getColor() == Color.WHITE) {
+                diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() - 1][figure.getCurrentPosition().getyCoordinate() + 1]);
+                diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() + 1][figure.getCurrentPosition().getyCoordinate() + 1]);
+                for (Field field : diag) {
+                    if (gameBoard.get(field) != null && gameBoard.get(field).getColor() != Color.WHITE) {
+                        validMoves.add(field);
+                    }
                 }
-            }
-        } else {
-            diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() - 1][figure.getCurrentPosition().getyCoordinate() - 1]);
-            diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() + 1][figure.getCurrentPosition().getyCoordinate() - 1]);
-            for (Field field : diag) {
-                if (gameBoard.get(field) != null) {
-                    validMoves.add(field);
+            } else {
+                diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() - 1][figure.getCurrentPosition().getyCoordinate() - 1]);
+                diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() + 1][figure.getCurrentPosition().getyCoordinate() - 1]);
+                for (Field field : diag) {
+                    if (gameBoard.get(field) != null && gameBoard.get(field).getColor() != Color.BLACK) {
+                        validMoves.add(field);
+                    }
                 }
             }
         }
+        catch(ArrayIndexOutOfBoundsException e){
+
+        }
     }
+
 
     private void removeBlockedFields(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves) {
         allPossibleMoves.removeAll(invalidMoves);

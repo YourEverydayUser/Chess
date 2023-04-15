@@ -4,6 +4,9 @@
 package Chess;
 
 import GameSession.GameSession;
+import Pieces.Field;
+import Pieces.Figures.Figure;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,18 +17,48 @@ public class App {
     public static void main(String[] args) throws IOException {
         GameSession gameSession = GameSession.getInstance();
         JFrame frame = new JFrame();
-        JPanel panel = new ChessBoardPanel(gameSession.accessBoard().getGameBoard());
+        ChessBoardPanel panel = new ChessBoardPanel(gameSession.accessBoard().getGameBoard());
+        gameSession.addObserver(panel);
+
         frame.setBounds(100, 100, 512, 512);
         frame.setUndecorated(true);
         frame.add(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         panel.addMouseListener(new MouseAdapter() {
+            private int firstX = -1;
+            private int firstY = -1;
+
             @Override
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / 64;
-                int y = Math.abs(e.getY() - (8 * 64)) / 64;
-                System.out.println("Clicked on field: (" + x + ", " + y + ")");
+                int y = e.getY() / 64;
+
+                if (firstX == -1 && firstY == -1) {
+                    firstX = x;
+                    firstY = y;
+                    System.out.println("From field x:" + x + "   y: " + y);
+                    Figure figure = gameSession.accessBoard().getGameBoard().get(gameSession.accessBoard().getKeys()[x][y]);
+                    if(figure != null) {
+                        for(Field field : gameSession.accessBoard().getValidMoves(figure)) {
+                            System.out.println("x =  " + field.getxCoordinate() + "   y =  " + field.getyCoordinate());
+                        }
+                    }
+                } else {
+                    Field fromField = gameSession.accessBoard().getKeys()[firstX][firstY];
+                    Field toField = gameSession.accessBoard().getKeys()[x][y];
+                    int message = gameSession.playTurn(fromField, toField);
+                    System.out.println("To field x:" + x + "   y: " + y);
+                    switch (message) {
+                        case 1 -> JOptionPane.showMessageDialog(null, "Error: No Figure at the given point");
+                        case 2 -> JOptionPane.showMessageDialog(null, "Error: Other players turn");
+                        case 3 -> JOptionPane.showMessageDialog(null, "Error: Not a valid move.");
+                        case 4 -> panel.repaint();
+                    }
+                    firstX = -1;
+                    firstY = -1;
+                }
+
             }
         });
     }

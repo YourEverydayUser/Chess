@@ -1,5 +1,7 @@
 package GameSession;
 
+import Observer.BoardObservable;
+import Observer.BoardObserver;
 import Pieces.Board;
 import Pieces.Field;
 import Pieces.Figures.Figure;
@@ -7,24 +9,27 @@ import Pieces.Figures.Pawn;
 import Pieces.Figures.Queen;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The class GameSession initializes the gameBoard and keeps track of the turnCount.
  */
-public class GameSession  {
+public class GameSession implements BoardObservable {
 
     private Board gameBoard;
     private int turnCount;
     private final ArrayList<Player> players;
     private int currentTurn;
+    private final List<BoardObserver> observers;
 
     private GameSession() {
         gameBoard = new Board();
         turnCount = 0;
         players = new ArrayList<>();
-        players.add(Player.initializeBlackPlayer());
         players.add(Player.initializeWhitePlayer());
-        currentTurn = 1;
+        players.add(Player.initializeBlackPlayer());
+        currentTurn = 0;
+        observers = new ArrayList<>();
 
         //adds the players figures to the gameBoard
         for(Player players : players) {
@@ -48,17 +53,17 @@ public class GameSession  {
         return players;
     }
 
-    public void playTurn(Field fromField, Field toField) {
+    public int playTurn(Field fromField, Field toField) {
         Figure figure = gameBoard.getGameBoard().get(fromField);
         if (figure == null) {
-            throw new IllegalArgumentException("No figure on the fromField.");
+            return 1;
         }
         if (!figure.getColor().equals(players.get(currentTurn).getColor())) {
-            throw new IllegalArgumentException("It's not " + players.get(currentTurn).getColor() + "'s turn.");
+            return 2;
         }
         ArrayList<Field> validMoves = gameBoard.getValidMoves(figure);
         if (!validMoves.contains(toField)) {
-            throw new IllegalArgumentException("Invalid move.");
+            return 3;
         }
 
         Figure capturedFigure = gameBoard.getGameBoard().get(toField);
@@ -77,5 +82,23 @@ public class GameSession  {
 
         currentTurn = (currentTurn + 1) % 2;
         turnCount++;
+        return 4;
+    }
+
+    @Override
+    public void addObserver(BoardObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(BoardObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Board board) {
+        for (BoardObserver observer : observers) {
+            observer.update(this.accessBoard());
+        }
     }
 }
