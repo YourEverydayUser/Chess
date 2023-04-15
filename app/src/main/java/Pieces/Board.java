@@ -159,29 +159,32 @@ public class Board {
     }
 
     private ArrayList<Point> getDiagonalBlockedFields(Figure figure, Field occupiedField) {
-            ArrayList<Point> blockedFields = new ArrayList<>();
+        ArrayList<Point> blockedFields = new ArrayList<>();
 
-            int figureX = figure.getCurrentPosition().getxCoordinate();
-            int figureY = figure.getCurrentPosition().getyCoordinate();
-            int blockedX = occupiedField.getxCoordinate();
-            int blockedY = occupiedField.getyCoordinate();
+        int figureX = figure.getCurrentPosition().getxCoordinate();
+        int figureY = figure.getCurrentPosition().getyCoordinate();
+        int blockedX = occupiedField.getxCoordinate();
+        int blockedY = occupiedField.getyCoordinate();
 
-            // Determine the direction of the blocking piece from the bishop
-            int dx = Integer.signum(blockedX - figureX);
-            int dy = Integer.signum(blockedY - figureY);
+        // Determine the direction of the blocking piece from the bishop
+        int dx = Integer.signum(blockedX - figureX);
+        int dy = Integer.signum(blockedY - figureY);
 
-            // Remove all fields diagonally behind the blocking piece
-            int x = blockedX + dx;
-            int y = blockedY + dy;
-            while (x != figureX && y != figureY && x >= 0 && y >= 0 && x < 8 && y < 8) {
-                blockedFields.add(new Point(x, y));
-                x += dx;
-                y += dy;
-            }
+        // Remove all fields diagonally behind the blocking piece
+        int x = blockedX + dx;
+        int y = blockedY + dy;
+        while (x != figureX && y != figureY && x >= 0 && y >= 0 && x < 8 && y < 8) {
+            blockedFields.add(new Point(x, y));
+            x += dx;
+            y += dy;
+        }
 
-            // Remove the blocking piece itself
+        // Remove the blocking piece itself
+        if(!isPathBlocked(figure.getCurrentPosition(), occupiedField) &&
+                figure.getColor() == gameBoard.get(occupiedField).getColor()) {
             blockedFields.add(new Point(occupiedField.getxCoordinate(), occupiedField.getyCoordinate()));
-            return blockedFields;
+        }
+        return blockedFields;
     }
 
     private ArrayList<Point> getRowColumnBlockedFields(Figure figure, Field occupiedField) {
@@ -209,7 +212,10 @@ public class Board {
             }
         }
 
-        blockedFields.add(Field.transformFieldToPoint(keys[occupiedX][occupiedY]));
+        if(!isPathBlocked(figure.getCurrentPosition(), occupiedField) &&
+                figure.getColor() == gameBoard.get(occupiedField).getColor()) {
+            blockedFields.add(Field.transformFieldToPoint(keys[occupiedX][occupiedY]));
+        }
 
         return blockedFields;
     }

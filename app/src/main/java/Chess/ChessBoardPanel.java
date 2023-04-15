@@ -38,7 +38,7 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
         super.paint(g);
 
         for(int x = 7; x >= 0; x--) {
-            for(int y = 0; y < 8; y++) {
+            for(int y = 7; y >= 0; y--) {
                 if((x+y) % 2 == 0) {
                     g.setColor(Color.WHITE);
                 } else {
