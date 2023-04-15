@@ -31,4 +31,12 @@ public class Bishop extends Figure {
         return possibleMoves;
     }
 
+    public static void main(String[] args) {
+        Bishop bishop = new Bishop(new Field(4, 4), true, Color.BLACK);
+
+        for(Point point : bishop.calculatePossibleMoves(bishop.getCurrentPosition())) {
+            System.out.println(point);
+        }
+    }
+
 }

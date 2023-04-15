@@ -1,15 +1,13 @@
 package Pieces.Figures;
 
 import Pieces.Field;
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runners.JUnit4;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class BishopTest extends TestCase {
+public class BishopTest {
 
     @Test
     public void testCalculatePossibleMoves() {
@@ -33,7 +31,7 @@ public class BishopTest extends TestCase {
         ArrayList<Point> allPossibleMoves = bishop.calculatePossibleMoves(bishop.getCurrentPosition());
 
         //test
-        assertEquals(correctMoves, allPossibleMoves);
+        Assert.assertEquals(correctMoves, allPossibleMoves);
 
     }
 }

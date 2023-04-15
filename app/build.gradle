@@ -27,4 +27,11 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass = 'Chess.App'
+
+    task test1(type: Test) {
+        useJUnit()
+        include 'Pieces/Figures/BishopTest.java'
+    }
+
 }
+

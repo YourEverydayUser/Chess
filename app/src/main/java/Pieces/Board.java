@@ -31,26 +31,97 @@ public class Board {
         return keys;
     }
 
-    //TODO filter all possible moves and get only the valid ones
+
     public ArrayList<Field> getValidMoves(Figure figure) {
         ArrayList<Field> allPossibleMoves = figure.getPossibleMoves();
-        int xmax;
-        int ymax;
 
-        if(!figure.getName().equals("Knight")) {
-            for(Field field : allPossibleMoves) {
-                if(gameBoard.get(field) != null) {
-                    if(field.getyCoordinate() == figure.getCurrentPosition().getyCoordinate()) {
-                        xmax = field.getxCoordinate();
+        switch(figure.getName()) {
+            case "Knight", "King":
+                allPossibleMoves.removeIf(field -> gameBoard.get(field) != null);
+                break;
+            case "Bishop":
+                for (Field field : allPossibleMoves) {
+                    if (gameBoard.get(field) != null) {
+                        allPossibleMoves.removeAll(getDiagonalBlockedFields(figure, field));
                     }
-                    xmax = field.getxCoordinate();
-                    ymax = field.getyCoordinate();
-
-                    allPossibleMoves.remove(field);
                 }
-            }
+                break;
+            case "Tower":
+                for(Field field : allPossibleMoves) {
+                    if(gameBoard.get(field) != null) {
+                        allPossibleMoves.removeAll(getRowColumnBlockedFields(figure, field));
+                    }
+                }
+                break;
+            case "Queen":
+                for(Field field : allPossibleMoves) {
+                    if(gameBoard.get(field) != null) {
+                        if (figure.getCurrentPosition().getxCoordinate() == field.getxCoordinate() || figure.getCurrentPosition().getyCoordinate() == field.getyCoordinate()) {
+                            allPossibleMoves.removeAll(getRowColumnBlockedFields(figure, field));
+                        } else {
+                            allPossibleMoves.removeAll(getDiagonalBlockedFields(figure, field));
+                        }
+                    }
+                }
         }
         return null;
     }
 
+    private ArrayList<Field> getDiagonalBlockedFields(Figure figure, Field occupiedField) {
+            ArrayList<Field> blockedFields = new ArrayList<>();
+
+            int figureX = figure.getCurrentPosition().getxCoordinate();
+            int figureY = figure.getCurrentPosition().getyCoordinate();
+            int blockedX = occupiedField.getxCoordinate();
+            int blockedY = occupiedField.getyCoordinate();
+
+            // Determine the direction of the blocking piece from the bishop
+            int dx = Integer.signum(figureX - blockedX);
+            int dy = Integer.signum(figureY - blockedY);
+
+            // Remove all fields diagonally behind the blocking piece
+            int x = blockedX + dx;
+            int y = blockedY + dy;
+            while (x != figureX && y != figureY) {
+                blockedFields.add(new Field(x, y));
+                x += dx;
+                y += dy;
+            }
+
+            // Remove the blocking piece itself
+            blockedFields.add(occupiedField);
+            return blockedFields;
+    }
+
+    private ArrayList<Field> getRowColumnBlockedFields(Figure figure, Field occupiedField) {
+        ArrayList<Field> blockedFields = new ArrayList<>();
+
+        int figureX = figure.getCurrentPosition().getxCoordinate();
+        int figureY = figure.getCurrentPosition().getyCoordinate();
+        int occupiedX = occupiedField.getxCoordinate();
+        int occupiedY = occupiedField.getyCoordinate();
+
+        // Check if the occupied field is on the same row or column as the figure
+        if (figureX == occupiedX) {
+            // Remove all fields on the same row as the occupied field
+            for (int y = 0; y < 8; y++) {
+                if (y != occupiedY) {
+                    blockedFields.add(new Field(occupiedX, y));
+                }
+            }
+        } else if (figureY == occupiedY) {
+            // Remove all fields on the same column as the occupied field
+            for (int x = 0; x < 8; x++) {
+                if (x != occupiedX) {
+                    blockedFields.add(new Field(x, occupiedY));
+                }
+            }
+        }
+
+        blockedFields.add(occupiedField);
+
+        return blockedFields;
+    }
+
 }
+
