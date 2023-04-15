@@ -28,12 +28,4 @@ public class Tower extends Figure {
         }
         return possibleMoves;
     }
-
-    public static void main(String[] args) {
-        Tower tower = new Tower(new Field(0, 0), true, Color.BLACK);
-
-        for(Point point : tower.calculatePossibleMoves(tower.getCurrentPosition())) {
-            System.out.println(point);
-        }
-    }
 }

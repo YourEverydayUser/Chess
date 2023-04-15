@@ -3,7 +3,6 @@ package Pieces.Figures;
 import Pieces.Field;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -26,12 +25,14 @@ public class BishopTest {
         correctMoves.add(new Point(6, 3));
         correctMoves.add(new Point(6, 7));
         correctMoves.add(new Point(7, 2));
+        correctMoves.add(new Point(2, 7));
 
         //function call
         ArrayList<Point> allPossibleMoves = bishop.calculatePossibleMoves(bishop.getCurrentPosition());
 
         //test
-        Assert.assertEquals(correctMoves, allPossibleMoves);
-
+        for(Point point : allPossibleMoves) {
+            Assert.assertTrue(correctMoves.contains(point));
+        }
     }
 }

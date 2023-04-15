@@ -37,4 +37,7 @@ public class GameSession {
         return new GameSession();
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 }

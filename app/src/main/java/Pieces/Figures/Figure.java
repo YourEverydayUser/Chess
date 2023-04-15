@@ -1,12 +1,13 @@
 package Pieces.Figures;
 import Pieces.Field;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Figure {
 
     private Field currentPosition;
     private boolean onGameBoard;
-    private ArrayList<Field> possibleMoves;
     private final Color COLOR;
     private final String NAME;
 
@@ -16,6 +17,8 @@ public abstract class Figure {
         this.COLOR = color;
         this.NAME = name;
     }
+
+    public abstract ArrayList<Point> calculatePossibleMoves(Field currentPosition);
 
     public Field getCurrentPosition() {
         return currentPosition;
@@ -31,10 +34,6 @@ public abstract class Figure {
 
     public void setOnGameBoard(boolean onGameBoard) {
         this.onGameBoard = onGameBoard;
-    }
-
-    public ArrayList<Field> getPossibleMoves() {
-        return possibleMoves;
     }
 
     public Color getColor() {

@@ -21,8 +21,8 @@ public class Player {
 
     public static Player initializeWhitePlayer() {
         Player whitePlayer = new Player("white", true);
-        whitePlayer.figures.add(new King(new Field(3, 0), true, Color.WHITE));
-        whitePlayer.figures.add(new Queen(new Field(4, 0), true, Color.WHITE));
+        whitePlayer.figures.add(new King(new Field(4, 0), true, Color.WHITE));
+        whitePlayer.figures.add(new Queen(new Field(3, 0), true, Color.WHITE));
         whitePlayer.figures.add(new Bishop(new Field(5, 0), true, Color.WHITE));
         whitePlayer.figures.add(new Bishop(new Field(2, 0), true, Color.WHITE));
         whitePlayer.figures.add(new Knight(new Field(6, 0), true, Color.WHITE));
@@ -39,8 +39,8 @@ public class Player {
 
     public static Player initializeBlackPlayer() {
         Player blackPlayer = new Player("black", false);
-        blackPlayer.figures.add(new King(new Field(3, 7), true, Color.BLACK));
-        blackPlayer.figures.add(new Queen(new Field(4, 7), true, Color.BLACK));
+        blackPlayer.figures.add(new King(new Field(4, 7), true, Color.BLACK));
+        blackPlayer.figures.add(new Queen(new Field(3, 7), true, Color.BLACK));
         blackPlayer.figures.add(new Bishop(new Field(5, 7), true, Color.BLACK));
         blackPlayer.figures.add(new Bishop(new Field(2, 7), true, Color.BLACK));
         blackPlayer.figures.add(new Knight(new Field(6, 7), true, Color.BLACK));

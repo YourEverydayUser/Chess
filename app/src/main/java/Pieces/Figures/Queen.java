@@ -31,12 +31,4 @@ public class Queen extends Figure {
         }
         return possibleMoves;
     }
-
-    public static void main(String[] args) {
-        Queen quuen = new Queen(new Field(0, 0), true, Color.BLACK);
-
-        for(Point point : quuen.calculatePossibleMoves(quuen.getCurrentPosition())) {
-            System.out.println(point);
-        }
-    }
 }

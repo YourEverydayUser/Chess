@@ -32,11 +32,4 @@ public class King extends Figure {
         return possibleMoves;
     }
 
-    public static void main(String[] args) {
-        King king = new King(new Field(4, 4), true, Color.BLACK);
-
-        for(Point point : king.calculatePossibleMoves(king.getCurrentPosition())) {
-            System.out.println(point);
-        }
-    }
 }

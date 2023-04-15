@@ -33,12 +33,4 @@ public class Knight extends Figure {
         return possibleMoves;
     }
 
-    public static void main(String[] args) {
-        Knight knight = new Knight(new Field(4, 2), true, Color.BLACK);
-
-        for(Point point : knight.calculatePossibleMoves(knight.getCurrentPosition())) {
-            System.out.println(point);
-        }
-        System.out.println(knight.calculatePossibleMoves(knight.getCurrentPosition()).size());
-    }
 }

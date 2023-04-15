@@ -8,6 +8,8 @@ import Pieces.Figures.Figure;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -67,12 +69,12 @@ public class App {
                     if(figure != null) {
                         figureType = figure.getName();
                         switch (figureType) {
-                            case ("King") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 0 : 6;
-                            case ("Queen") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 1 : 7;
-                            case ("Bishop") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 2 : 8;
-                            case ("Knight") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 3 : 9;
-                            case ("Tower") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 4 : 10;
-                            case ("Peasent") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 5 : 11;
+                            case ("King") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 0 : 6;
+                            case ("Queen") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 1 : 7;
+                            case ("Bishop") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 2 : 8;
+                            case ("Knight") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 3 : 9;
+                            case ("Tower") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 4 : 10;
+                            case ("Peasent") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 5 : 11;
                         }
                         g.drawImage(imgs[ind], field.getxCoordinate() * 64, field.getyCoordinate() * 64, this);
                     }
@@ -83,16 +85,13 @@ public class App {
         frame.add(pn);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
-        while(true) {
-            try {
-
-                System.out.println("X-Position: " + frame.getMousePosition().x);
-                System.out.println("Y-Position: " + frame.getMousePosition().y);
-            } catch (NullPointerException e) {
-
+        pn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX() / 64;
+                int y = Math.abs(e.getY() - (8 * 64))/ 64;
+                System.out.println("Clicked on field: (" + x + ", " + y + ")");
             }
-        }
-
+        });
     }
 }
