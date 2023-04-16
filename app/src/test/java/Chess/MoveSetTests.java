@@ -69,7 +69,5 @@ public class MoveSetTests {
 
         // When
         game.playTurn(game.accessBoard().getKeys()[0][3], game.accessBoard().getKeys()[0][4]);
-
     }
-
 }

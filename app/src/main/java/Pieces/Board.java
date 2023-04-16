@@ -7,7 +7,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 /**
  * The Board class represents the game board and is responsible for keeping track of the current board state.
  * The gameBoard is a HashMap which contains all the Fields of the board and the figures which are currently on
