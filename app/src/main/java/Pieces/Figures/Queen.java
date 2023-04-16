@@ -19,16 +19,25 @@ public class Queen extends Figure {
         int currentX = currentPosition.getxCoordinate();
         int currentY = currentPosition.getyCoordinate();
 
-        int sum = currentX + currentY;
+        // Tower rules
+        for (int i = 0; i < 8; i++) {
+            if (i != currentY) {
+                possibleMoves.add(new Point(currentX, i));
+            }
+            if (i != currentX) {
+                possibleMoves.add(new Point(i, currentY));
+            }
+        }
 
-        for(int x = 0; x <= 7; x++) {
-            for(int y = 0; y <= 7; y++) {
-                if((((currentX == x) && (currentY != y)) || ((currentX != x) && (currentY == y))) || //tower rules
-                   (x+y==sum) || ((((x-currentX) + (y - currentY)) % 2 == 0) && ((x-currentX) == (y - currentY)))) {//bishop rules
+        // Bishop rules
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (Math.abs(currentX - x) == Math.abs(currentY - y) && (currentX != x && currentY != y)) {
                     possibleMoves.add(new Point(x, y));
                 }
             }
         }
+
         return possibleMoves;
     }
 }

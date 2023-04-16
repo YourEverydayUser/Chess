@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -21,9 +22,9 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
         this.board = board;
 
         //Desktop
-        //BufferedImage all = ImageIO.read(new File("C:\\Users\\Fabian\\Desktop\\Chess\\app\\src\\main\\resources\\chess.png"));
+        BufferedImage all = ImageIO.read(new File("C:\\Users\\Fabian\\Desktop\\Chess\\app\\src\\main\\resources\\chess.png"));
         //Laptop
-        BufferedImage all = ImageIO.read(new File("C:\\Users\\fkust\\IdeaProjects\\Chess\\app\\src\\main\\resources\\chess.png"));
+        //BufferedImage all = ImageIO.read(new File("C:\\Users\\fkust\\IdeaProjects\\Chess\\app\\src\\main\\resources\\chess.png"));
         int ind=0;
         for(int y=0;y<400;y+=200){
             for(int x=0;x<1200;x+=200){
@@ -56,15 +57,23 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
             if(figure != null) {
                 figureType = figure.getName();
                 switch (figureType) {
-                    case ("King") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 0 : 6;
-                    case ("Queen") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 1 : 7;
-                    case ("Bishop") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 2 : 8;
-                    case ("Knight") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 3 : 9;
-                    case ("Tower") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 4 : 10;
-                    case ("Pawn") -> ind = figure.getColor() == Pieces.Figures.Color.BLACK ? 5 : 11;
+                    case ("King") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 0 : 6;
+                    case ("Queen") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 1 : 7;
+                    case ("Bishop") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 2 : 8;
+                    case ("Knight") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 3 : 9;
+                    case ("Tower") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 4 : 10;
+                    case ("Pawn") -> ind = figure.getColor() == Pieces.Figures.Color.WHITE ? 5 : 11;
                 }
                 g.drawImage(images[ind], field.getxCoordinate() * 64, field.getyCoordinate() * 64, this);
             }
+        }
+    }
+
+    public void paintPossibleMove(Graphics g, ArrayList<Field> fields) {
+        Color blue = new Color(0, 0, 255, 128);
+        g.setColor(blue);
+        for(Field field : fields) {
+            g.fillRect(field.getxCoordinate() * 64, field.getyCoordinate() * 64, 64, 64);
         }
     }
 

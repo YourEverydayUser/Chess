@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class BoardTest extends TestCase {
 
     GameSession gameSession = GameSession.getInstance();
-    Player blackPlayer = gameSession.getPlayers().get(0);
-    Player whitePlayer = gameSession.getPlayers().get(1);
+    Player whitePlayer = gameSession.getPlayers().get(0);
+    Player blackPlayer = gameSession.getPlayers().get(1);
 
     @Test
     public void testPossibleMovesKnight() {
@@ -39,7 +39,7 @@ public class BoardTest extends TestCase {
 
     @Test
     public void testPossibleMovesBishopWhite() {
-        Figure figure = whitePlayer.getFigures().get(3);
+        Figure figure = blackPlayer.getFigures().get(3);
         ArrayList<Field> validMoves = gameSession.accessBoard().getValidMoves(figure);
 
         Assert.assertEquals(0, validMoves.size());
@@ -47,7 +47,7 @@ public class BoardTest extends TestCase {
 
     @Test
     public void testPossibleMovesQueenBlack() {
-        Figure figure = whitePlayer.getFigures().get(1);
+        Figure figure = blackPlayer.getFigures().get(1);
         ArrayList<Field> validMoves = gameSession.accessBoard().getValidMoves(figure);
 
         Assert.assertEquals(0, validMoves.size());
@@ -55,7 +55,7 @@ public class BoardTest extends TestCase {
 
     @Test
     public void testPossibleMovesQueenWhite() {
-        Figure figure = whitePlayer.getFigures().get(1);
+        Figure figure = blackPlayer.getFigures().get(1);
         ArrayList<Field> validMoves = gameSession.accessBoard().getValidMoves(figure);
 
         Assert.assertEquals(0, validMoves.size());

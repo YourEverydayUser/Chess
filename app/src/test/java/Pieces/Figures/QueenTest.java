@@ -41,7 +41,6 @@ public class QueenTest {
         correctMoves.add(new Point(2, 4));
         correctMoves.add(new Point(1, 5));
         correctMoves.add(new Point(0, 6));
-        correctMoves.add(new Point(3, 3));
 
         //function call
         ArrayList<Point> allPossibleMoves = queen.calculatePossibleMoves(queen.getCurrentPosition());

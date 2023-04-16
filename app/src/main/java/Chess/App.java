@@ -5,13 +5,13 @@ package Chess;
 
 import GameSession.GameSession;
 import Pieces.Field;
-import Pieces.Figures.Color;
 import Pieces.Figures.Figure;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class App {
 
@@ -41,7 +41,9 @@ public class App {
                     System.out.println("From field x:" + x + "   y: " + y);
                     Figure figure = gameSession.accessBoard().getGameBoard().get(gameSession.accessBoard().getKeys()[x][y]);
                     if(figure != null) {
-                        for(Field field : gameSession.accessBoard().getValidMoves(figure)) {
+                        ArrayList<Field> possibleMoves = gameSession.accessBoard().getValidMoves(figure);
+                        panel.paintPossibleMove(panel.getGraphics(),  possibleMoves);
+                        for(Field field : possibleMoves) {
                             System.out.println("x =  " + field.getxCoordinate() + "   y =  " + field.getyCoordinate());
                         }
                     }
@@ -51,9 +53,18 @@ public class App {
                     int message = gameSession.playTurn(fromField, toField);
                     System.out.println("To field x:" + x + "   y: " + y);
                     switch (message) {
-                        case 1 -> JOptionPane.showMessageDialog(null, "Error: No Figure at the given point");
-                        case 2 -> JOptionPane.showMessageDialog(null, "Error: Other players turn");
-                        case 3 -> JOptionPane.showMessageDialog(null, "Error: Not a valid move.");
+                        case 1 -> {
+                            JOptionPane.showMessageDialog(null, "Error: No Figure at the given point");
+                            panel.repaint();
+                        }
+                        case 2 -> {
+                            JOptionPane.showMessageDialog(null, "Error: Other players turn");
+                            panel.repaint();
+                        }
+                        case 3 -> {
+                            JOptionPane.showMessageDialog(null, "Error: Not a valid move.");
+                            panel.repaint();
+                        }
                         case 4 -> panel.repaint();
                     }
                     firstX = -1;

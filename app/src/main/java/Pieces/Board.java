@@ -195,28 +195,41 @@ public class Board {
         int occupiedX = occupiedField.getxCoordinate();
         int occupiedY = occupiedField.getyCoordinate();
 
+        //if the path is to the target is blocked just remove the target and the rest doesn't need to be removed.
+        if(isPathBlocked(figure.getCurrentPosition(), occupiedField)) {
+            blockedFields.add(Field.transformFieldToPoint(getKeys()[occupiedX][occupiedY]));
+            return blockedFields;
+        }
+
+        // Check if the figure is from the opposing player, if so do nothing
+        if (figure.getColor() != gameBoard.get(occupiedField).getColor()) {
+            return blockedFields;
+        }
+
         // Check if the occupied field is on the same row or column as the figure
         if (figureX == occupiedX) {
-            // Remove all fields on the same row as the occupied field
-            for (int y = occupiedY; y < 8; y++) {
-                if (y != occupiedY) {
+            if (occupiedY > figureY) {
+                for (int y = occupiedY; y < 8; y++) {
                     blockedFields.add(Field.transformFieldToPoint(keys[occupiedX][y]));
                 }
             }
-        } else if (figureY == occupiedY) {
-            // Remove all fields on the same column as the occupied field
-            for (int x = occupiedX; x < 8; x++) {
-                if (x != occupiedX) {
+            else {
+                for (int y = occupiedY; y >= 0; y--) {
+                    blockedFields.add(Field.transformFieldToPoint(keys[occupiedX][y]));
+                }
+            }
+        } else {
+            if (occupiedX > figureX) {
+                for (int x = occupiedX; x < 8; x++) {
+                    blockedFields.add(Field.transformFieldToPoint(keys[x][occupiedY]));
+                }
+            }
+            else {
+                for (int x = occupiedX; x >= 0; x--) {
                     blockedFields.add(Field.transformFieldToPoint(keys[x][occupiedY]));
                 }
             }
         }
-
-        if(!isPathBlocked(figure.getCurrentPosition(), occupiedField) &&
-                figure.getColor() == gameBoard.get(occupiedField).getColor()) {
-            blockedFields.add(Field.transformFieldToPoint(keys[occupiedX][occupiedY]));
-        }
-
         return blockedFields;
     }
 

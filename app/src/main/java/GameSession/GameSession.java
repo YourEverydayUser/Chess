@@ -74,6 +74,8 @@ public class GameSession implements BoardObservable {
 
         gameBoard.getGameBoard().put(toField, figure);
         gameBoard.getGameBoard().put(fromField, null);
+        //update the figures current location
+        gameBoard.getGameBoard().get(gameBoard.getKeys()[toField.getxCoordinate()][toField.getyCoordinate()]).setCurrentPosition(toField);
 
         // Check if a pawn has reached the opposite end of the board
         if (figure instanceof Pawn && (toField.getyCoordinate() == 0 || toField.getyCoordinate() == 7)) {
