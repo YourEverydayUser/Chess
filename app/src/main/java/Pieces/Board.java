@@ -105,12 +105,11 @@ public class Board {
      * @param invalidMoves is filled with the moves which aren't valid
      */
     private void validTowerMoves(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves) {
-        for(Point point  : allPossibleMoves) {
-            Field field = getKeys()[point.x][point.y];
-            if(gameBoard.get(field) != null) {
-                invalidMoves.addAll(getRowColumnBlockedFields(figure, field));
-            }
-        }
+        allPossibleMoves.stream()
+                .map(point -> getKeys()[point.x][point.y])
+                .filter(field ->gameBoard.get(field) != null && gameBoard.get(field).getColor() == figure.getColor())
+                .forEach(field -> invalidMoves.addAll(getDiagonalBlockedFields(figure, field)));
+
         removeBlockedFields(figure, allPossibleMoves, invalidMoves);
     }
 
@@ -123,13 +122,11 @@ public class Board {
      * @param invalidMoves is filled with the moves which aren't valid
      */
     private void validBishopMoves(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves) {
-        for (Point point : allPossibleMoves) {
-            Field field = getKeys()[point.x][point.y];
-            if (gameBoard.get(field) != null &&
-                    gameBoard.get(field).getColor() == figure.getColor()) {
-                invalidMoves.addAll(getDiagonalBlockedFields(figure, field));
-            }
-        }
+        allPossibleMoves.stream()
+                .map(point -> getKeys()[point.x][point.y])
+                .filter(field ->gameBoard.get(field) != null && gameBoard.get(field).getColor() == figure.getColor())
+                .forEach(field -> invalidMoves.addAll(getDiagonalBlockedFields(figure, field)));
+
         removeBlockedFields(figure, allPossibleMoves, invalidMoves);
     }
 

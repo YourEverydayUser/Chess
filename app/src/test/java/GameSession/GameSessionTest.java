@@ -5,8 +5,6 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
-import java.util.Set;
 import java.util.function.Function;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -107,11 +105,10 @@ public class GameSessionTest {
         Assert.assertEquals("Bishop", game.accessBoard().getGameBoard().get(keys[1][3]).getName());
     }
 
-    /**
+
     @Test
     public void testG() {
         Assert.assertTrue(game.isKingInCheck(Color.BLACK));
     }
-    **/
 
 }

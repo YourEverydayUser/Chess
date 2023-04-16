@@ -60,6 +60,12 @@ public class App {
                     Figure figure = gameSession.accessBoard().getGameBoard().get(gameSession.accessBoard().getKeys()[x][y]);
                     if (figure != null) {
                         ArrayList<Field> possibleMoves = gameSession.accessBoard().getValidMoves(figure);
+                        if (gameSession.getPlayers().get(gameSession.getCurrentTurn()).isChecked() && figure.getName().equals("King")) {
+                            possibleMoves.removeAll(possibleMoves.stream()
+                                    .filter(field -> gameSession.isFieldAttacked(field, gameSession.getCurrentPlayersColor())).toList());
+                        }
+
+
                         chessBoardPanel.paintPossibleMoves(chessBoardPanel.getGraphics(), possibleMoves);
                         for (Field field : possibleMoves) {
                             System.out.println("x =  " + field.getxCoordinate() + "   y =  " + field.getyCoordinate());

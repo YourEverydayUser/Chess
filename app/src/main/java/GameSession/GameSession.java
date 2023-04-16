@@ -31,8 +31,8 @@ public class GameSession implements BoardObservable {
         gameBoard = new Board();
         turnCount = 0;
         players = new ArrayList<>();
-        players.add(Player.initializeWhitePlayer());
-        players.add(Player.initializeBlackPlayer());
+        players.add(Player.initializeWhitePlayer(gameBoard));
+        players.add(Player.initializeBlackPlayer(gameBoard));
         currentTurn = 0;
         observers = new ArrayList<>();
 
@@ -58,8 +58,8 @@ public class GameSession implements BoardObservable {
         gameBoard = new Board();
         turnCount = 0;
         players = new ArrayList<>();
-        players.add(Player.initializeWhitePlayer());
-        players.add(Player.initializeBlackPlayer());
+        players.add(Player.initializeWhitePlayer(gameBoard));
+        players.add(Player.initializeBlackPlayer(gameBoard));
         currentTurn = 0;
         observers = new ArrayList<>();
 
@@ -79,6 +79,7 @@ public class GameSession implements BoardObservable {
 
     public int playTurn(Field fromField, Field toField) {
         Figure figure = gameBoard.getGameBoard().get(fromField);
+        Color playerColor = getCurrentPlayersColor();
         if (figure == null) {
             return 1;
         }
@@ -86,13 +87,13 @@ public class GameSession implements BoardObservable {
             return 2;
         }
         ArrayList<Field> validMoves = gameBoard.getValidMoves(figure);
+        if (players.get(currentTurn).isChecked() && figure.getName().equals("King")) {
+            validMoves.removeAll(validMoves.stream().filter(field -> isFieldAttacked(field, playerColor)).toList());
+        }
         if (!validMoves.contains(toField)) {
             return 3;
         }
-        if (isKingInCheck(getCurrentPlayersColor())) {
-            return 4;
-        }
-        if (isCheckMate(players.get(currentTurn).getColor())) {
+        if (isCheckMate(players.get(currentTurn))) {
             return 5;
         }
 
@@ -115,17 +116,25 @@ public class GameSession implements BoardObservable {
 
         currentTurn = (currentTurn + 1) % 2;
         turnCount++;
+        if(isKingInCheck(players.get(currentTurn).getColor())) {
+            players.get(currentTurn).setChecked(true);
+            return 4;
+        }
         return 6;
     }
 
-    public boolean isCheckMate(Color kingColor) {
+    public int getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public boolean isCheckMate(Player player) {
         // First, check if the king is in check
-        if (!isKingInCheck(kingColor)) {
+        if (!player.isChecked()) {
             return false;
         }
 
         // Next, check if any move can get the king out of check
-        Figure king = getKing(kingColor);
+        Figure king = getKing(player.getColor());
         for (Field destination : gameBoard.getValidMoves(king)) {
             if (!isKingInCheckAfterMove(king, destination)) {
                 return false;
@@ -167,13 +176,7 @@ public class GameSession implements BoardObservable {
         return turnCount;
     }
 
-    public boolean isKingInCheck(Color kingColor) {
-        Figure king = getKing(kingColor);
-        return kingColor == Color.WHITE ? isFieldAttacked(king.getCurrentPosition(), Color.BLACK)
-                : isFieldAttacked(king.getCurrentPosition(), Color.WHITE);
-    }
-
-    private boolean isFieldAttacked(Field field, Color color) {
+    public boolean isFieldAttacked(Field field, Color color) {
         if (color == Color.WHITE) {
             //get the figures of the opponent
             for (Figure figure : players.get(1).getFigures()) {
@@ -194,6 +197,17 @@ public class GameSession implements BoardObservable {
         }
         return false;
     }
+
+    public Color getCurrentPlayersColor() {
+        return players.get(currentTurn).getColor();
+    }
+
+    public boolean isKingInCheck(Color kingColor) {
+        Figure king = getKing(kingColor);
+        return kingColor == Color.WHITE ? isFieldAttacked(king.getCurrentPosition(), Color.WHITE)
+                : isFieldAttacked(king.getCurrentPosition(), Color.BLACK);
+    }
+
 
     private boolean isKingInCheckAfterMove(Figure figure, Field destination) {
         Field currentPosition = figure.getCurrentPosition();
@@ -228,9 +242,5 @@ public class GameSession implements BoardObservable {
                     .findFirst()
                     .orElse(null);
         }
-    }
-
-    private Color getCurrentPlayersColor() {
-        return players.get(currentTurn).getColor();
     }
 }
