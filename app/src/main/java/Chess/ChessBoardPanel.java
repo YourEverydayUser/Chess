@@ -1,5 +1,6 @@
 package Chess;
 
+import GameSession.GameSession;
 import Observer.BoardObserver;
 import Pieces.Board;
 import Pieces.Field;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 
 
 public class ChessBoardPanel extends JPanel implements BoardObserver {
-    private final HashMap<Field, Figure> board;
+    private HashMap<Field, Figure> board;
     private final Image[] images = new Image[12];
 
     public ChessBoardPanel(HashMap<Field, Figure> board) throws IOException {
@@ -85,6 +86,10 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
             this.board.putAll(board.getGameBoard());
             //TODO method call to board for checking if check or checkmate
             repaint();
+    }
+
+    public void resetBoard(GameSession gameSession) {
+        board = gameSession.accessBoard().getGameBoard();
     }
 
 }

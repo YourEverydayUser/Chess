@@ -21,11 +21,11 @@ import java.util.Objects;
  */
 public class GameSession implements BoardObservable {
 
-    private final Board gameBoard;
+    private Board gameBoard;
     private int turnCount;
-    private final ArrayList<Player> players;
+    private ArrayList<Player> players;
     private int currentTurn;
-    private final List<BoardObserver> observers;
+    private List<BoardObserver> observers;
 
     private GameSession() {
         gameBoard = new Board();
@@ -52,6 +52,25 @@ public class GameSession implements BoardObservable {
 
     public static GameSession getInstance() {
         return new GameSession();
+    }
+
+    public void resetGame() {
+        gameBoard = new Board();
+        turnCount = 0;
+        players = new ArrayList<>();
+        players.add(Player.initializeWhitePlayer());
+        players.add(Player.initializeBlackPlayer());
+        currentTurn = 0;
+        observers = new ArrayList<>();
+
+        //adds the players figures to the gameBoard
+        for(Player players : players) {
+            for(Figure figure : players.getFigures()) {
+                Field currentField = figure.getCurrentPosition();
+                Field[][] keys = gameBoard.getKeys();
+                gameBoard.getGameBoard().put(keys[currentField.getxCoordinate()][currentField.getyCoordinate()], figure);
+            }
+        }
     }
 
     public ArrayList<Player> getPlayers() {

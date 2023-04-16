@@ -10,6 +10,8 @@ import Pieces.Figures.Figure;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -23,8 +25,21 @@ public class App {
         JFrame frame = new JFrame();
         ChessBoardPanel chessBoardPanel = new ChessBoardPanel(gameSession.accessBoard().getGameBoard());
         gameSession.addObserver(chessBoardPanel);
-        setupMenuBar(frame);
+        setupMenuBar(frame, gameSession, chessBoardPanel);
         setUpFrame(frame, chessBoardPanel);
+        JMenuItem restartButton = frame.getJMenuBar().getMenu(0).getItem(1);
+
+        // Restarting the game
+        restartButton.addMouseListener(new MouseAdapter() {
+                   @Override
+                   public void mousePressed(MouseEvent e) {
+                       gameSession.resetGame();
+                       chessBoardPanel.repaint();
+                       chessBoardPanel.resetBoard(gameSession);
+                   }
+                });
+
+        // Listening for mouse input
         chessBoardPanel.addMouseListener(new MouseAdapter() {
             private int firstX = -1;
             private int firstY = -1;
@@ -34,7 +49,7 @@ public class App {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
 
-                if((x<0||y<0) || (x>7 || y>7)) {
+                if ((x < 0 || y < 0) || (x > 7 || y > 7)) {
                     return;
                 }
 
@@ -43,10 +58,10 @@ public class App {
                     firstY = y;
                     System.out.println("From field x:" + x + "   y: " + y);
                     Figure figure = gameSession.accessBoard().getGameBoard().get(gameSession.accessBoard().getKeys()[x][y]);
-                    if(figure != null) {
+                    if (figure != null) {
                         ArrayList<Field> possibleMoves = gameSession.accessBoard().getValidMoves(figure);
-                        chessBoardPanel.paintPossibleMoves(chessBoardPanel.getGraphics(),  possibleMoves);
-                        for(Field field : possibleMoves) {
+                        chessBoardPanel.paintPossibleMoves(chessBoardPanel.getGraphics(), possibleMoves);
+                        for (Field field : possibleMoves) {
                             System.out.println("x =  " + field.getxCoordinate() + "   y =  " + field.getyCoordinate());
                         }
                     }
@@ -84,6 +99,7 @@ public class App {
 
             }
         });
+
     }
 
     private static void setUpFrame(JFrame frame, ChessBoardPanel chessBoardPanel) throws IOException {
@@ -98,13 +114,15 @@ public class App {
         frame.setVisible(true);
     }
 
-    private static void setupMenuBar(JFrame frame) {
+    private static void setupMenuBar(JFrame frame, GameSession gameSession, ChessBoardPanel chessBoardPanel) {
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
 
         JMenu settings = new JMenu("Settings");
         JMenuItem changeColorTheme = new JMenuItem("Change Color Theme");
+        JMenuItem restart = new JMenuItem("Restart");
         settings.add(changeColorTheme);
+        settings.add(restart);
         menuBar.add(settings);
     }
 }
