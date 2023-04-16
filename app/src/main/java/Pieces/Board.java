@@ -6,8 +6,7 @@ import Pieces.Figures.Color;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import static Pieces.BoardDimension.XDIMENSION;
-import static Pieces.BoardDimension.YDIMENSION;
+
 
 /**
  * The Board class represents the game board and is responsible for keeping track of the current board state.
@@ -19,14 +18,14 @@ import static Pieces.BoardDimension.YDIMENSION;
 
 public class Board {
 
-    private HashMap<Field, Figure> gameBoard;
-    private final Field[][] keys = new Field[XDIMENSION.getValue()][YDIMENSION.getValue()];
+    private final HashMap<Field, Figure> gameBoard;
+    private final Field[][] keys = new Field[8][8];
 
     public Board() {
         gameBoard = new HashMap<>();
 
-        for(int x = 0; x < XDIMENSION.getValue(); x++) {
-            for(int y = 0; y < YDIMENSION.getValue(); y++) {
+        for(int x = 0; x < 8; x++) {
+            for(int y = 0; y < 8; y++) {
                 keys[x][y] = new Field(x, y);
                 gameBoard.put(keys[x][y], null);
             }
@@ -67,7 +66,7 @@ public class Board {
             case "Bishop" -> validBishopMoves(figure, allPossibleMoves, invalidMoves);
             case "Tower" -> validTowerMoves(figure, allPossibleMoves, invalidMoves);
             case "Queen" -> validQueenMoves(figure, allPossibleMoves, invalidMoves);
-            case "Pawn" -> validPeasentMoves(figure, allPossibleMoves, invalidMoves, validMoves);
+            case "Pawn" -> validPawnMoves(figure, allPossibleMoves, invalidMoves, validMoves);
         }
         //conversion from point format to field format
         for(Point point : allPossibleMoves) {
@@ -77,6 +76,12 @@ public class Board {
         return validMoves;
     }
 
+    /**
+     * Validates possible moves for a queen figure and removes invalid moves that are blocked by other figures on the board.
+     * @param figure the queen figure for which moves are being validated
+     * @param allPossibleMoves the list of all possible moves for the queen figure
+     * @param invalidMoves the list of invalid moves that will be removed from the list of all possible moves
+     */
     private void validQueenMoves(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves) {
         for(Point point : allPossibleMoves) {
             Field field = getKeys()[point.x][point.y];
@@ -92,6 +97,14 @@ public class Board {
         allPossibleMoves.removeAll(invalidMoves);
     }
 
+    /**
+     * This method takes a tower, a list of all the possible moves the tower can make, and an empty list to collect the invalid moves.
+     * It checks if there is an occupied field in the list of all possible moves, and if so, it removes that and potentially other fields as well.
+     * Then it removes all the blocked fields (i.e., fields that are obstructed by other pieces), and updates the list of all possible moves.
+     * @param figure the tower
+     * @param allPossibleMoves all possible moves the tower could make
+     * @param invalidMoves is filled with the moves which aren't valid
+     */
     private void validTowerMoves(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves) {
         for(Point point  : allPossibleMoves) {
             Field field = getKeys()[point.x][point.y];
@@ -102,6 +115,14 @@ public class Board {
         removeBlockedFields(figure, allPossibleMoves, invalidMoves);
     }
 
+    /**
+     * This method takes a bishop, a list of all the possible moves the bishop can make, and an empty list to collect the invalid moves.
+     *  It checks if there is an occupied field in the list of all possible moves, and if the piece on that field has the same color as the bishop,
+     *  it removes that and potentially other fields as well. Then it removes all the blocked fields on the diagonals, and updates the list of all possible moves.
+     * @param figure the bishop
+     * @param allPossibleMoves all possible moves the bishop could make
+     * @param invalidMoves is filled with the moves which aren't valid
+     */
     private void validBishopMoves(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves) {
         for (Point point : allPossibleMoves) {
             Field field = getKeys()[point.x][point.y];
@@ -113,7 +134,16 @@ public class Board {
         removeBlockedFields(figure, allPossibleMoves, invalidMoves);
     }
 
-    private void validPeasentMoves(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves, ArrayList<Field> validMoves) {
+    /**
+     * This method takes a pawn, a list of all the possible moves the pawn can make, and an empty list to collect the invalid moves.
+     *  It first checks if there is an occupied field in the list of all possible moves, and if so, it removes that and potentially other fields as well.
+     *  Then it adds the valid moves for the pawn that are not in the list of all possible moves, such as capturing an opponent's piece diagonally,
+     *  and updates the list of all possible moves.
+     * @param figure the pawn
+     * @param allPossibleMoves all possible moves the pawn could make
+     * @param invalidMoves is filled with the moves which aren't valid
+     */
+    private void validPawnMoves(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves, ArrayList<Field> validMoves) {
         for (Point point : allPossibleMoves) {
             Field field = getKeys()[point.x][point.y];
             if (gameBoard.get(field) != null) {
@@ -140,12 +170,18 @@ public class Board {
                 }
             }
         }
-        catch(ArrayIndexOutOfBoundsException e){
+        catch(ArrayIndexOutOfBoundsException ignored){
 
         }
     }
 
-
+    /**
+     * This method takes a Figure, a list of all possible moves, and a list of invalid moves,
+     * and removes all the invalid moves and blocked fields from the list of all possible moves.
+     * @param figure the figure
+     * @param allPossibleMoves all the possible moves
+     * @param invalidMoves the invalid moves
+     */
     private void removeBlockedFields(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves) {
         allPossibleMoves.removeAll(invalidMoves);
         invalidMoves.clear();
@@ -158,6 +194,13 @@ public class Board {
         allPossibleMoves.removeAll(invalidMoves);
     }
 
+    /**
+     * This method takes a Figure and an occupied field (i.e., a field that is obstructed by another piece)
+     * and returns a list of all the fields on the diagonals that are blocked by the occupying piece.
+     * @param figure the figure
+     * @param occupiedField the occupied field on the same diagonal as the figure itself
+     * @return ArrayList<Point> blockedFields / a list which contains all the blocked fields
+     */
     private ArrayList<Point> getDiagonalBlockedFields(Figure figure, Field occupiedField) {
         ArrayList<Point> blockedFields = new ArrayList<>();
 
@@ -187,6 +230,13 @@ public class Board {
         return blockedFields;
     }
 
+    /**
+     * This method takes a Figure and an occupied field (i.e., a field that is obstructed by another piece)
+     * and returns a list of all the fields on the same x- or y-axis that are blocked by the occupying piece.
+     * @param figure the figure
+     * @param occupiedField the occupied field on the same x- or y-axis as the figure itself
+     * @return ArrayList<Point> blockedFields / a list which contains all the blocked fields
+     */
     private ArrayList<Point> getRowColumnBlockedFields(Figure figure, Field occupiedField) {
         ArrayList<Point> blockedFields = new ArrayList<>();
 
@@ -233,6 +283,12 @@ public class Board {
         return blockedFields;
     }
 
+    /**
+     *  Checks if there is any figure blocking the path between two fields on the game board.
+     *  @param from the starting field of the path
+     *  @param to the end field of the path
+     *  @return true if there is a figure blocking the path, false otherwise
+     */
     private boolean isPathBlocked(Field from, Field to) {
         int deltaX = Integer.compare(to.getxCoordinate(), from.getxCoordinate());
         int deltaY = Integer.compare(to.getyCoordinate(), from.getyCoordinate());
@@ -243,11 +299,11 @@ public class Board {
         while (x != to.getxCoordinate() || y != to.getyCoordinate()) {
             Field field = getKeys()[x][y];
             if (gameBoard.get(field) != null) {
-                return true; // A figure is blocking the path
+                return true;
             }
             x += deltaX;
             y += deltaY;
         }
-        return false; // The path is not blocked
+        return false;
     }
 }

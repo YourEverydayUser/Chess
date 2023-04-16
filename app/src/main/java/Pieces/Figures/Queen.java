@@ -19,7 +19,6 @@ public class Queen extends Figure {
         int currentX = currentPosition.getxCoordinate();
         int currentY = currentPosition.getyCoordinate();
 
-        // Tower rules
         for (int i = 0; i < 8; i++) {
             if (i != currentY) {
                 possibleMoves.add(new Point(currentX, i));
@@ -29,7 +28,6 @@ public class Queen extends Figure {
             }
         }
 
-        // Bishop rules
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 if (Math.abs(currentX - x) == Math.abs(currentY - y) && (currentX != x && currentY != y)) {

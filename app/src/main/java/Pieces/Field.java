@@ -2,34 +2,32 @@ package Pieces;
 
 import java.awt.*;
 
+/**
+ * The chessboard consists of 64 fields. Each field has an x- and y-coordinate, which
+ * can be accessed.
+ * @Author Fabian Kuster
+ */
+
 public class Field {
 
-    private final int XCOORDINATE;
-    private final int YCOORDINATE;
-    private final Color COLOR;
+    private final int X_COORDINATE;
+    private final int Y_COORDINATE;
 
     public Field(int xCoordinate, int yCoordinate) {
-        this.XCOORDINATE = xCoordinate;
-        this.YCOORDINATE = yCoordinate;
-
-        if((xCoordinate+yCoordinate) % 2 == 0) {
-            COLOR = Color.BLACK;
-        } else {
-            COLOR = Color.WHITE;
-        }
+        this.X_COORDINATE = xCoordinate;
+        this.Y_COORDINATE = yCoordinate;
     }
 
     public int getxCoordinate() {
-        return XCOORDINATE;
+        return X_COORDINATE;
     }
 
     public int getyCoordinate() {
-        return YCOORDINATE;
+        return Y_COORDINATE;
     }
 
     public static Point transformFieldToPoint(Field field) {
         return new Point(field.getxCoordinate(), field.getyCoordinate());
     }
-
 
 }

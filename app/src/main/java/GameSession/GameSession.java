@@ -13,10 +13,13 @@ import java.util.List;
 
 /**
  * The class GameSession initializes the gameBoard and keeps track of the turnCount.
+ * It has the method playTurn which updates the boardState. When the board gets
+ * changed all the observers will be notified.
+ * @Author Fabian Kuster
  */
 public class GameSession implements BoardObservable {
 
-    private Board gameBoard;
+    private final Board gameBoard;
     private int turnCount;
     private final ArrayList<Player> players;
     private int currentTurn;
@@ -70,6 +73,7 @@ public class GameSession implements BoardObservable {
         if (capturedFigure != null) {
             getPlayers().get(currentTurn).getDeadPool().add(capturedFigure);
             getPlayers().get(currentTurn).getFigures().remove(capturedFigure);
+            capturedFigure.setOnGameBoard(false);
         }
 
         gameBoard.getGameBoard().put(toField, figure);
@@ -102,5 +106,9 @@ public class GameSession implements BoardObservable {
         for (BoardObserver observer : observers) {
             observer.update(this.accessBoard());
         }
+    }
+
+    public int getTurnCount() {
+        return turnCount;
     }
 }
