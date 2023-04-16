@@ -41,9 +41,11 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
         for(int x = 7; x >= 0; x--) {
             for(int y = 7; y >= 0; y--) {
                 if((x+y) % 2 == 0) {
-                    g.setColor(Color.WHITE);
+                    // light fields
+                    g.setColor(new Color(238, 216, 150, 255));
                 } else {
-                    g.setColor(Color.darkGray);
+                    // dark fields
+                    g.setColor(new Color(99, 147, 225, 127));
                 }
                 g.fillRect(x*64, y*64, 64, 64);
             }
@@ -69,8 +71,8 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
         }
     }
 
-    public void paintPossibleMove(Graphics g, ArrayList<Field> fields) {
-        Color blue = new Color(0, 0, 255, 128);
+    public void paintPossibleMoves(Graphics g, ArrayList<Field> fields) {
+        Color blue = new Color(220, 208, 53, 226);
         g.setColor(blue);
         for(Field field : fields) {
             g.fillRect(field.getxCoordinate() * 64, field.getyCoordinate() * 64, 64, 64);
@@ -81,6 +83,7 @@ public class ChessBoardPanel extends JPanel implements BoardObserver {
     public void update(Board board) {
             this.board.clear();
             this.board.putAll(board.getGameBoard());
+            //TODO method call to board for checking if check or checkmate
             repaint();
     }
 

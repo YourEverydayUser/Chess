@@ -146,7 +146,7 @@ public class Board {
         for (Point point : allPossibleMoves) {
             Field field = getKeys()[point.x][point.y];
             if (gameBoard.get(field) != null) {
-                invalidMoves.addAll(getRowColumnBlockedFields(figure, field));
+                invalidMoves.add(Field.transformFieldToPoint(field));
             }
         }
         ArrayList<Field> diag = new ArrayList<>();
@@ -172,6 +172,7 @@ public class Board {
         catch(ArrayIndexOutOfBoundsException ignored){
 
         }
+        removeBlockedFields(figure, allPossibleMoves, invalidMoves);
     }
 
     /**

@@ -7,9 +7,12 @@ import GameSession.GameSession;
 import Pieces.Field;
 import Pieces.Figures.Figure;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,15 +21,11 @@ public class App {
     public static void main(String[] args) throws IOException {
         GameSession gameSession = GameSession.getInstance();
         JFrame frame = new JFrame();
-        ChessBoardPanel panel = new ChessBoardPanel(gameSession.accessBoard().getGameBoard());
-        gameSession.addObserver(panel);
-
-        frame.setBounds(100, 100, 512, 512);
-        frame.setUndecorated(true);
-        frame.add(panel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        panel.addMouseListener(new MouseAdapter() {
+        ChessBoardPanel chessBoardPanel = new ChessBoardPanel(gameSession.accessBoard().getGameBoard());
+        gameSession.addObserver(chessBoardPanel);
+        setupMenuBar(frame);
+        setUpFrame(frame, chessBoardPanel);
+        chessBoardPanel.addMouseListener(new MouseAdapter() {
             private int firstX = -1;
             private int firstY = -1;
 
@@ -35,6 +34,10 @@ public class App {
                 int x = e.getX() / 64;
                 int y = e.getY() / 64;
 
+                if((x<0||y<0) || (x>7 || y>7)) {
+                    return;
+                }
+
                 if (firstX == -1 && firstY == -1) {
                     firstX = x;
                     firstY = y;
@@ -42,7 +45,7 @@ public class App {
                     Figure figure = gameSession.accessBoard().getGameBoard().get(gameSession.accessBoard().getKeys()[x][y]);
                     if(figure != null) {
                         ArrayList<Field> possibleMoves = gameSession.accessBoard().getValidMoves(figure);
-                        panel.paintPossibleMove(panel.getGraphics(),  possibleMoves);
+                        chessBoardPanel.paintPossibleMoves(chessBoardPanel.getGraphics(),  possibleMoves);
                         for(Field field : possibleMoves) {
                             System.out.println("x =  " + field.getxCoordinate() + "   y =  " + field.getyCoordinate());
                         }
@@ -55,17 +58,25 @@ public class App {
                     switch (message) {
                         case 1 -> {
                             JOptionPane.showMessageDialog(null, "Error: No Figure at the given point");
-                            panel.repaint();
+                            chessBoardPanel.repaint();
                         }
                         case 2 -> {
                             JOptionPane.showMessageDialog(null, "Error: Other players turn");
-                            panel.repaint();
+                            chessBoardPanel.repaint();
                         }
                         case 3 -> {
                             JOptionPane.showMessageDialog(null, "Error: Not a valid move.");
-                            panel.repaint();
+                            chessBoardPanel.repaint();
                         }
-                        case 4 -> panel.repaint();
+                        case 4 -> {
+                            JOptionPane.showMessageDialog(null, "Check!!");
+                            chessBoardPanel.repaint();
+                        }
+                        case 5 -> {
+                            JOptionPane.showMessageDialog(null, "CheckMate!!");
+                            chessBoardPanel.repaint();
+                        }
+                        case 6 -> chessBoardPanel.repaint();
                     }
                     firstX = -1;
                     firstY = -1;
@@ -73,5 +84,27 @@ public class App {
 
             }
         });
+    }
+
+    private static void setUpFrame(JFrame frame, ChessBoardPanel chessBoardPanel) throws IOException {
+        //the game board itself is 512 / 512
+        frame.setBounds(100, 100, 700, 700);
+        frame.setTitle("Chess");
+        Image iconImage = ImageIO.read(new File("C:\\Users\\Fabian\\Desktop\\Chess\\app\\src\\main\\resources\\Pawn_White.png"));
+        frame.setIconImage(iconImage);
+
+        frame.add(chessBoardPanel);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+    private static void setupMenuBar(JFrame frame) {
+        JMenuBar menuBar = new JMenuBar();
+        frame.setJMenuBar(menuBar);
+
+        JMenu settings = new JMenu("Settings");
+        JMenuItem changeColorTheme = new JMenuItem("Change Color Theme");
+        settings.add(changeColorTheme);
+        menuBar.add(settings);
     }
 }
