@@ -167,7 +167,7 @@ public class GameSession implements BoardObservable {
         return turnCount;
     }
 
-    private boolean isKingInCheck(Color kingColor) {
+    public boolean isKingInCheck(Color kingColor) {
         Figure king = getKing(kingColor);
         return kingColor == Color.WHITE ? isFieldAttacked(king.getCurrentPosition(), Color.BLACK)
                 : isFieldAttacked(king.getCurrentPosition(), Color.WHITE);

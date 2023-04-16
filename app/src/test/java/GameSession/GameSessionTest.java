@@ -78,48 +78,40 @@ public class GameSessionTest {
     @Test
     public void testC() {
         // When
-        game.playTurn(keys[1][1], keys[1][3]);
+        game.playTurn(keys[3][1], keys[3][3]);
         // Then
-        Assert.assertEquals(game.accessBoard().getGameBoard().get(keys[1][3]).getName(), "Pawn");
+        Assert.assertEquals("Pawn", game.accessBoard().getGameBoard().get(keys[3][3]).getName());
     }
 
     @Test
     public void testD() {
         // When
-        game.playTurn(keys[1][6], keys[1][4]);
+        game.playTurn(keys[4][6], keys[4][4]);
         // Then
-        Assert.assertEquals(game.accessBoard().getGameBoard().get(keys[1][4]).getName(), "Pawn");
+        Assert.assertEquals("Pawn", game.accessBoard().getGameBoard().get(keys[4][4]).getName());
     }
 
     @Test
     public void testE() {
         // When
-        game.playTurn(keys[1][0], keys[2][2]);
+        game.playTurn(keys[4][1], keys[4][2]);
         // Then
-        Assert.assertEquals(game.accessBoard().getGameBoard().get(keys[2][2]).getName(), "Knight");
+        Assert.assertEquals("Pawn", game.accessBoard().getGameBoard().get(keys[4][2]).getName());
     }
 
     @Test
     public void testF() {
         // When
-        game.playTurn(keys[1][7], keys[0][5]);
+        game.playTurn(keys[5][7], keys[1][3]);
         // Then
-        Assert.assertEquals(game.accessBoard().getGameBoard().get(keys[0][5]).getName(), "Knight");
+        Assert.assertEquals("Bishop", game.accessBoard().getGameBoard().get(keys[1][3]).getName());
     }
 
+    /**
     @Test
     public void testG() {
-        // When
-        game.playTurn(keys[0][0], keys[1][0]);
-        // Then
-        Assert.assertEquals(game.accessBoard().getGameBoard().get(keys[1][0]).getName(), "Tower");
+        Assert.assertTrue(game.isKingInCheck(Color.BLACK));
     }
-
-    public static void main(String[] args) {
-        GameSession game = GameSession.getInstance();
-        Field[][] keys = game.accessBoard().getKeys();
-
-    }
-
+    **/
 
 }

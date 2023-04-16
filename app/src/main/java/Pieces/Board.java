@@ -150,27 +150,50 @@ public class Board {
             }
         }
         ArrayList<Field> diag = new ArrayList<>();
-        try {
-            if (figure.getColor() == Color.WHITE) {
-                diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() - 1][figure.getCurrentPosition().getyCoordinate() + 1]);
-                diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() + 1][figure.getCurrentPosition().getyCoordinate() + 1]);
-                for (Field field : diag) {
-                    if (gameBoard.get(field) != null && gameBoard.get(field).getColor() != Color.WHITE) {
-                        validMoves.add(field);
-                    }
-                }
-            } else {
-                diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() - 1][figure.getCurrentPosition().getyCoordinate() - 1]);
-                diag.add(getKeys()[figure.getCurrentPosition().getxCoordinate() + 1][figure.getCurrentPosition().getyCoordinate() - 1]);
-                for (Field field : diag) {
-                    if (gameBoard.get(field) != null && gameBoard.get(field).getColor() != Color.BLACK) {
-                        validMoves.add(field);
-                    }
-                }
-            }
-        }
-        catch(ArrayIndexOutOfBoundsException ignored){
+        int smallX = figure.getCurrentPosition().getxCoordinate() - 1;
+        int bigX = figure.getCurrentPosition().getxCoordinate() + 1;
 
+        int smallY = figure.getCurrentPosition().getyCoordinate() - 1;
+        int bigY = figure.getCurrentPosition().getyCoordinate() + 1;
+
+        if (figure.getColor() == Color.WHITE) {
+            if(bigY < 0 || bigY > 7) {
+                removeBlockedFields(figure, allPossibleMoves, invalidMoves);
+                return;
+            } else if (smallX < 0) {
+                diag.add(getKeys()[bigX][bigY]);
+                validMoves.addAll(diag.stream().filter(diagonalField -> gameBoard.get(diagonalField) != null && gameBoard.get(diagonalField).getColor() != Color.WHITE).toList());
+                removeBlockedFields(figure, allPossibleMoves, invalidMoves);
+                return;
+            } else if (bigX > 7) {
+                diag.add(getKeys()[smallX][bigY]);
+                validMoves.addAll(diag.stream().filter(diagonalField -> gameBoard.get(diagonalField) != null && gameBoard.get(diagonalField).getColor() != Color.WHITE).toList());
+                removeBlockedFields(figure, allPossibleMoves, invalidMoves);
+                return;
+            } else {
+                diag.add(getKeys()[smallX][bigY]);
+                diag.add(getKeys()[bigX][bigY]);
+                validMoves.addAll(diag.stream().filter(diagonalField -> gameBoard.get(diagonalField) != null && gameBoard.get(diagonalField).getColor() != Color.WHITE).toList());
+            }
+        } else {
+            if(smallY < 0 || smallY > 7) {
+                removeBlockedFields(figure, allPossibleMoves, invalidMoves);
+                return;
+            } else if (smallX < 0) {
+                diag.add(getKeys()[bigX][smallY]);
+                validMoves.addAll(diag.stream().filter(diagonalField -> gameBoard.get(diagonalField) != null && gameBoard.get(diagonalField).getColor() != Color.BLACK).toList());
+                removeBlockedFields(figure, allPossibleMoves, invalidMoves);
+                return;
+            } else if (bigX > 7) {
+                diag.add(getKeys()[smallX][smallY]);
+                validMoves.addAll(diag.stream().filter(diagonalField -> gameBoard.get(diagonalField) != null && gameBoard.get(diagonalField).getColor() != Color.BLACK).toList());
+                removeBlockedFields(figure, allPossibleMoves, invalidMoves);
+                return;
+            } else {
+                diag.add(getKeys()[smallX][smallY]);
+                diag.add(getKeys()[bigX][smallY]);
+                validMoves.addAll(diag.stream().filter(diagonalField -> gameBoard.get(diagonalField) != null && gameBoard.get(diagonalField).getColor() != Color.BLACK).toList());
+            }
         }
         removeBlockedFields(figure, allPossibleMoves, invalidMoves);
     }
@@ -185,12 +208,12 @@ public class Board {
     private void removeBlockedFields(Figure figure, ArrayList<Point> allPossibleMoves, ArrayList<Point> invalidMoves) {
         allPossibleMoves.removeAll(invalidMoves);
         invalidMoves.clear();
-        for (Point point : allPossibleMoves) {
-            Field field = getKeys()[point.x][point.y];
-            if (isPathBlocked(figure.getCurrentPosition(), field)) {
-                invalidMoves.add(point);
-            }
-        }
+        invalidMoves.addAll(
+            allPossibleMoves.stream()
+                    .map(point -> getKeys()[point.x][point.y])
+                    .filter(field -> isPathBlocked(figure.getCurrentPosition(), field))
+                    .map(Field::transformFieldToPoint)
+                    .toList());
         allPossibleMoves.removeAll(invalidMoves);
     }
 

@@ -70,4 +70,29 @@ public class MoveSetTests {
         // When
         game.playTurn(game.accessBoard().getKeys()[0][3], game.accessBoard().getKeys()[0][4]);
     }
+
+    /**
+     * 1.) Pawn white from (7, 1) to (7, 3)
+     * 2.) Pawn black from (7, 6) to (7, 4)
+     * 3.) Pawn white from (6, 1) to (6, 3)
+     * 4.) Pawn black from (7, 4) to (6, 3)
+     */
+
+    @Test
+    public void moveSet3() {
+        // Setup
+        GameSession game = GameSession.getInstance();
+        Field[][] keys = game.accessBoard().getKeys();
+
+        // When
+        game.playTurn(game.accessBoard().getKeys()[7][1], game.accessBoard().getKeys()[7][3]);
+        game.playTurn(game.accessBoard().getKeys()[7][6], game.accessBoard().getKeys()[7][4]);
+        game.playTurn(game.accessBoard().getKeys()[6][1], game.accessBoard().getKeys()[6][3]);
+        game.playTurn(game.accessBoard().getKeys()[7][4], game.accessBoard().getKeys()[6][3]);
+
+        // Then
+        Assert.assertEquals(game.accessBoard().getGameBoard().get(game.accessBoard().getKeys()[6][3]).getName(), "Pawn");
+        Assert.assertEquals(game.accessBoard().getGameBoard().get(game.accessBoard().getKeys()[6][3]).getColor(), Color.BLACK);
+
+    }
 }
